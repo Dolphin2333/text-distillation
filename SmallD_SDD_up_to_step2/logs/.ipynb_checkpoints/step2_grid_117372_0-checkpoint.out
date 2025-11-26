@@ -1,0 +1,7 @@
+Hostname: b-31-7
+Python:
+/scratch/zz3645/conda_envs/nlp_env/bin/python
+Python 3.10.19
+CUDA visible devices: 0
+Task ID: 0
+Config: IPC=1, window=10, seed=0

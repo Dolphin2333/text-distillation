@@ -1,0 +1,22 @@
+Hostname: b-31-195
+Python:
+/scratch/zz3645/conda_envs/nlp_env/bin/python
+Python 3.10.19
+CUDA visible devices: 0
+Task ID: 4
+Config: IPC=5, window=20, seed=0
+Found checkpoint: out_IPC_5_no_cu_20mrpc_mlp4_ipc5_w20.pth
+Using device: cuda
+Loading validation data from ./scripts/mrpc_emb...
+Val set shape: x=(408, 768), y=(408,)
+Loading synthetic data from out_IPC_5_no_cu_20mrpc_mlp4_ipc5_w20.pth...
+Synthetic set shape: X=(10, 768), y=(10,)
+Training fresh TextMLP on synthetic set and evaluating on real MRPC val...
+[Epoch 200/1000] train_loss=0.0000 val_acc=71.81%
+[Epoch 400/1000] train_loss=0.0000 val_acc=71.81%
+[Epoch 600/1000] train_loss=0.0000 val_acc=71.81%
+[Epoch 800/1000] train_loss=0.0000 val_acc=71.81%
+[Epoch 1000/1000] train_loss=0.0000 val_acc=71.81%
+
+=== FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 71.81% ===
+Eval exit code: 0

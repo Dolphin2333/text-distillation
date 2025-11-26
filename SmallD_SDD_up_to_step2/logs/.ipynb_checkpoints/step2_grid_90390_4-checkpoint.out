@@ -1,0 +1,1155 @@
+Hostname: b-31-165
+Python:
+/scratch/zz3645/conda_envs/nlp_env/bin/python
+Python 3.10.19
+CUDA visible devices: 0
+Task ID: 4
+Config: IPC=5, window=20, seed=0
+Torch Seed Specified with rank: 0
+Dataset: mrpc_emb
+Dataset Path: ./scripts
+Namespace(seed=0, mp_distributed=False, world_size=1, rank=0, dist_url='tcp://224.66.41.62:23456', dist_backend='nccl', workers=0, gpu=None, root='./scripts', dataset='mrpc_emb', arch='text_mlp', lr=0.001, inner_optim='Adam', outer_optim='Adam', inner_lr=0.001, label_lr_scale=1, num_per_class=5, batch_per_class=5, task_sampler_nc=2, window=20, minwindow=0, totwindow=20, num_train_eval=4, train_y=False, batch_size=200, eps=1e-08, wd=0, test_freq=5, print_freq=20, start_epoch=0, epochs=100, ddtype='standard', cctype=0, zca=False, wandb=False, clip_coef=0.9, fname='mrpc_mlp_ipc5_w20_seed0', name='mrpc_step2_ipc5_w20_seed0', comp_aug=False, comp_aug_real=False, syn_strategy='none', real_strategy='none', ckptname='none', limit_train=False, load_ckpt=False, complete_random=False, distributed=False, data_root='./scripts/mrpc_emb')
+==> Preparing data..
+mrpc_emb
+None None
+Dataset: number of classes: 2
+Training set size: 3668
+Image size: channel 1, height 768, width 1
+Synthetic images, not_single False, keys []
+==> Building model..
+Initialized data with size, x: torch.Size([10, 768]), y:torch.Size([10])
+TextMLP(
+  (fc1): Linear(in_features=768, out_features=64, bias=True)
+  (fc2): Linear(in_features=64, out_features=2, bias=True)
+)
+use data parallel only
+GPU_0_using curriculum 20 with window 20
+The current update step is 19
+GPU_0_using curriculum 20 with window 20
+The current update step is 38
+GPU_0_using curriculum 20 with window 20
+The current update step is 57
+GPU_0_using curriculum 20 with window 20
+The current update step is 76
+GPU_0_using curriculum 20 with window 20
+The current update step is 95
+The current seed is 16775891396791054964
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 70.098
+ *   Acc@1 71.047
+ *   Acc@1 69.853
+ *   Acc@1 71.020
+ *   Acc@1 69.608
+ *   Acc@1 71.047
+ *   Acc@1 69.853
+ *   Acc@1 70.992
+ *   Acc@1 70.343
+ *   Acc@1 71.456
+ *   Acc@1 70.343
+ *   Acc@1 71.565
+ *   Acc@1 70.343
+ *   Acc@1 71.374
+ *   Acc@1 70.343
+ *   Acc@1 71.429
+ *   Acc@1 70.098
+ *   Acc@1 71.238
+ *   Acc@1 70.098
+ *   Acc@1 71.320
+ *   Acc@1 70.098
+ *   Acc@1 71.374
+ *   Acc@1 70.098
+ *   Acc@1 71.374
+ *   Acc@1 70.098
+ *   Acc@1 71.347
+ *   Acc@1 70.098
+ *   Acc@1 71.565
+ *   Acc@1 70.098
+ *   Acc@1 71.538
+ *   Acc@1 69.853
+ *   Acc@1 71.483
+Training for 300 epoch: 70.1593137254902
+Training for 600 epoch: 70.09803921568627
+Training for 1000 epoch: 70.03676470588235
+Training for 3000 epoch: 70.03676470588235
+Training for 300 epoch: 71.27181025081788
+Training for 600 epoch: 71.36723009814612
+Training for 1000 epoch: 71.33315158124319
+Training for 3000 epoch: 71.31952017448201
+[[70.1593137254902, 70.09803921568627, 70.03676470588235, 70.03676470588235], [71.27181025081788, 71.36723009814612, 71.33315158124319, 71.31952017448201]]
+train loss 0.5797601053927951, epoch 4, best loss 0.5797601053927951, best_epoch 4
+GPU_0_using curriculum 20 with window 20
+The current update step is 114
+GPU_0_using curriculum 20 with window 20
+The current update step is 133
+GPU_0_using curriculum 20 with window 20
+The current update step is 152
+GPU_0_using curriculum 20 with window 20
+The current update step is 171
+GPU_0_using curriculum 20 with window 20
+The current update step is 190
+The current seed is 13641028215000803341
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 69.363
+ *   Acc@1 70.474
+ *   Acc@1 69.363
+ *   Acc@1 70.284
+ *   Acc@1 69.363
+ *   Acc@1 70.284
+ *   Acc@1 69.853
+ *   Acc@1 70.174
+ *   Acc@1 70.098
+ *   Acc@1 69.793
+ *   Acc@1 70.343
+ *   Acc@1 69.602
+ *   Acc@1 70.588
+ *   Acc@1 69.493
+ *   Acc@1 70.588
+ *   Acc@1 69.547
+ *   Acc@1 70.098
+ *   Acc@1 69.493
+ *   Acc@1 70.343
+ *   Acc@1 69.493
+ *   Acc@1 70.588
+ *   Acc@1 69.411
+ *   Acc@1 70.343
+ *   Acc@1 69.220
+ *   Acc@1 69.608
+ *   Acc@1 70.393
+ *   Acc@1 69.608
+ *   Acc@1 70.229
+ *   Acc@1 69.608
+ *   Acc@1 70.065
+ *   Acc@1 69.608
+ *   Acc@1 70.256
+Training for 300 epoch: 69.79166666666666
+Training for 600 epoch: 69.9142156862745
+Training for 1000 epoch: 70.03676470588235
+Training for 3000 epoch: 70.09803921568627
+Training for 300 epoch: 70.0381679389313
+Training for 600 epoch: 69.90185387131952
+Training for 1000 epoch: 69.81324972737187
+Training for 3000 epoch: 69.79961832061068
+[[69.79166666666666, 69.9142156862745, 70.03676470588235, 70.09803921568627], [70.0381679389313, 69.90185387131952, 69.81324972737187, 69.79961832061068]]
+train loss 0.6344410753042123, epoch 9, best loss 0.5797601053927951, best_epoch 4
+GPU_0_using curriculum 20 with window 20
+The current update step is 209
+GPU_0_using curriculum 20 with window 20
+The current update step is 228
+GPU_0_using curriculum 20 with window 20
+The current update step is 247
+GPU_0_using curriculum 20 with window 20
+The current update step is 266
+GPU_0_using curriculum 20 with window 20
+The current update step is 285
+The current seed is 3996442597788046697
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 70.098
+ *   Acc@1 69.575
+ *   Acc@1 70.833
+ *   Acc@1 69.248
+ *   Acc@1 70.833
+ *   Acc@1 69.111
+ *   Acc@1 70.343
+ *   Acc@1 69.084
+ *   Acc@1 68.382
+ *   Acc@1 70.393
+ *   Acc@1 69.853
+ *   Acc@1 70.093
+ *   Acc@1 70.343
+ *   Acc@1 69.575
+ *   Acc@1 71.078
+ *   Acc@1 69.057
+ *   Acc@1 70.098
+ *   Acc@1 69.002
+ *   Acc@1 68.627
+ *   Acc@1 67.803
+ *   Acc@1 68.382
+ *   Acc@1 67.067
+ *   Acc@1 66.422
+ *   Acc@1 65.185
+ *   Acc@1 70.343
+ *   Acc@1 69.138
+ *   Acc@1 70.098
+ *   Acc@1 68.948
+ *   Acc@1 69.853
+ *   Acc@1 68.920
+ *   Acc@1 70.098
+ *   Acc@1 68.702
+Training for 300 epoch: 69.73039215686273
+Training for 600 epoch: 69.85294117647058
+Training for 1000 epoch: 69.8529411764706
+Training for 3000 epoch: 69.48529411764707
+Training for 300 epoch: 69.52699018538713
+Training for 600 epoch: 69.02262813522356
+Training for 1000 epoch: 68.66821155943293
+Training for 3000 epoch: 68.0070883315158
+[[69.73039215686273, 69.85294117647058, 69.8529411764706, 69.48529411764707], [69.52699018538713, 69.02262813522356, 68.66821155943293, 68.0070883315158]]
+train loss 0.6298885368858845, epoch 14, best loss 0.5797601053927951, best_epoch 4
+GPU_0_using curriculum 20 with window 20
+The current update step is 304
+GPU_0_using curriculum 20 with window 20
+The current update step is 323
+GPU_0_using curriculum 20 with window 20
+The current update step is 342
+GPU_0_using curriculum 20 with window 20
+The current update step is 361
+GPU_0_using curriculum 20 with window 20
+The current update step is 380
+The current seed is 11742252808666038874
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 72.794
+ *   Acc@1 72.819
+ *   Acc@1 72.794
+ *   Acc@1 72.846
+ *   Acc@1 72.549
+ *   Acc@1 72.846
+ *   Acc@1 72.549
+ *   Acc@1 72.846
+ *   Acc@1 72.304
+ *   Acc@1 72.574
+ *   Acc@1 72.549
+ *   Acc@1 72.574
+ *   Acc@1 72.549
+ *   Acc@1 72.710
+ *   Acc@1 72.304
+ *   Acc@1 72.874
+ *   Acc@1 72.549
+ *   Acc@1 72.710
+ *   Acc@1 72.549
+ *   Acc@1 72.683
+ *   Acc@1 72.304
+ *   Acc@1 72.655
+ *   Acc@1 72.304
+ *   Acc@1 72.628
+ *   Acc@1 72.059
+ *   Acc@1 72.601
+ *   Acc@1 72.059
+ *   Acc@1 72.492
+ *   Acc@1 72.059
+ *   Acc@1 72.492
+ *   Acc@1 71.814
+ *   Acc@1 72.437
+Training for 300 epoch: 72.42647058823529
+Training for 600 epoch: 72.48774509803921
+Training for 1000 epoch: 72.36519607843137
+Training for 3000 epoch: 72.24264705882352
+Training for 300 epoch: 72.67584514721919
+Training for 600 epoch: 72.64858233369684
+Training for 1000 epoch: 72.67584514721919
+Training for 3000 epoch: 72.69629225736097
+[[72.42647058823529, 72.48774509803921, 72.36519607843137, 72.24264705882352], [72.67584514721919, 72.64858233369684, 72.67584514721919, 72.69629225736097]]
+train loss 0.7793486003267336, epoch 19, best loss 0.5797601053927951, best_epoch 4
+GPU_0_using curriculum 20 with window 20
+The current update step is 399
+GPU_0_using curriculum 20 with window 20
+The current update step is 418
+GPU_0_using curriculum 20 with window 20
+The current update step is 437
+GPU_0_using curriculum 20 with window 20
+The current update step is 456
+GPU_0_using curriculum 20 with window 20
+The current update step is 475
+The current seed is 12321974782801749303
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 70.588
+ *   Acc@1 74.019
+ *   Acc@1 70.343
+ *   Acc@1 73.882
+ *   Acc@1 70.588
+ *   Acc@1 73.855
+ *   Acc@1 70.588
+ *   Acc@1 73.528
+ *   Acc@1 70.588
+ *   Acc@1 73.528
+ *   Acc@1 70.588
+ *   Acc@1 73.419
+ *   Acc@1 70.588
+ *   Acc@1 73.391
+ *   Acc@1 70.833
+ *   Acc@1 73.419
+ *   Acc@1 69.363
+ *   Acc@1 73.991
+ *   Acc@1 69.363
+ *   Acc@1 73.882
+ *   Acc@1 69.363
+ *   Acc@1 73.828
+ *   Acc@1 69.118
+ *   Acc@1 73.828
+ *   Acc@1 70.343
+ *   Acc@1 74.073
+ *   Acc@1 70.343
+ *   Acc@1 73.855
+ *   Acc@1 70.343
+ *   Acc@1 73.828
+ *   Acc@1 70.098
+ *   Acc@1 73.882
+Training for 300 epoch: 70.22058823529412
+Training for 600 epoch: 70.1593137254902
+Training for 1000 epoch: 70.22058823529412
+Training for 3000 epoch: 70.1593137254902
+Training for 300 epoch: 73.90267175572518
+Training for 600 epoch: 73.75954198473282
+Training for 1000 epoch: 73.72546346782988
+Training for 3000 epoch: 73.66412213740458
+[[70.22058823529412, 70.1593137254902, 70.22058823529412, 70.1593137254902], [73.90267175572518, 73.75954198473282, 73.72546346782988, 73.66412213740458]]
+train loss 0.5217789181121173, epoch 24, best loss 0.5217789181121173, best_epoch 24
+GPU_0_using curriculum 20 with window 20
+The current update step is 494
+GPU_0_using curriculum 20 with window 20
+The current update step is 513
+GPU_0_using curriculum 20 with window 20
+The current update step is 532
+GPU_0_using curriculum 20 with window 20
+The current update step is 551
+GPU_0_using curriculum 20 with window 20
+The current update step is 570
+The current seed is 14805073205412738756
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 69.853
+ *   Acc@1 74.182
+ *   Acc@1 69.853
+ *   Acc@1 74.019
+ *   Acc@1 69.363
+ *   Acc@1 74.100
+ *   Acc@1 69.363
+ *   Acc@1 73.882
+ *   Acc@1 70.098
+ *   Acc@1 74.318
+ *   Acc@1 70.098
+ *   Acc@1 74.182
+ *   Acc@1 69.853
+ *   Acc@1 74.209
+ *   Acc@1 70.098
+ *   Acc@1 74.373
+ *   Acc@1 69.363
+ *   Acc@1 73.746
+ *   Acc@1 69.363
+ *   Acc@1 73.691
+ *   Acc@1 69.363
+ *   Acc@1 73.691
+ *   Acc@1 69.608
+ *   Acc@1 73.719
+ *   Acc@1 69.608
+ *   Acc@1 74.264
+ *   Acc@1 69.853
+ *   Acc@1 74.182
+ *   Acc@1 69.853
+ *   Acc@1 74.182
+ *   Acc@1 69.363
+ *   Acc@1 73.964
+Training for 300 epoch: 69.73039215686275
+Training for 600 epoch: 69.79166666666667
+Training for 1000 epoch: 69.6078431372549
+Training for 3000 epoch: 69.6078431372549
+Training for 300 epoch: 74.12758996728462
+Training for 600 epoch: 74.0185387131952
+Training for 1000 epoch: 74.04580152671755
+Training for 3000 epoch: 73.98446019629225
+[[69.73039215686275, 69.79166666666667, 69.6078431372549, 69.6078431372549], [74.12758996728462, 74.0185387131952, 74.04580152671755, 73.98446019629225]]
+train loss 0.5149613806699589, epoch 29, best loss 0.5149613806699589, best_epoch 29
+GPU_0_using curriculum 20 with window 20
+The current update step is 589
+GPU_0_using curriculum 20 with window 20
+The current update step is 608
+GPU_0_using curriculum 20 with window 20
+The current update step is 627
+GPU_0_using curriculum 20 with window 20
+The current update step is 646
+GPU_0_using curriculum 20 with window 20
+The current update step is 665
+The current seed is 17220292715216088527
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 72.304
+ *   Acc@1 73.337
+ *   Acc@1 72.304
+ *   Acc@1 73.282
+ *   Acc@1 72.304
+ *   Acc@1 73.282
+ *   Acc@1 72.549
+ *   Acc@1 73.364
+ *   Acc@1 72.794
+ *   Acc@1 73.337
+ *   Acc@1 72.304
+ *   Acc@1 73.228
+ *   Acc@1 72.304
+ *   Acc@1 73.310
+ *   Acc@1 72.304
+ *   Acc@1 73.282
+ *   Acc@1 72.549
+ *   Acc@1 73.201
+ *   Acc@1 72.549
+ *   Acc@1 73.228
+ *   Acc@1 72.304
+ *   Acc@1 73.337
+ *   Acc@1 72.304
+ *   Acc@1 73.391
+ *   Acc@1 71.814
+ *   Acc@1 74.019
+ *   Acc@1 71.814
+ *   Acc@1 74.046
+ *   Acc@1 72.059
+ *   Acc@1 74.155
+ *   Acc@1 72.059
+ *   Acc@1 73.991
+Training for 300 epoch: 72.36519607843137
+Training for 600 epoch: 72.24264705882352
+Training for 1000 epoch: 72.24264705882352
+Training for 3000 epoch: 72.30392156862744
+Training for 300 epoch: 73.47328244274809
+Training for 600 epoch: 73.44601962922573
+Training for 1000 epoch: 73.5209923664122
+Training for 3000 epoch: 73.50736095965104
+[[72.36519607843137, 72.24264705882352, 72.24264705882352, 72.30392156862744], [73.47328244274809, 73.44601962922573, 73.5209923664122, 73.50736095965104]]
+train loss 0.5601428990275675, epoch 34, best loss 0.5149613806699589, best_epoch 29
+GPU_0_using curriculum 20 with window 20
+The current update step is 684
+GPU_0_using curriculum 20 with window 20
+The current update step is 703
+GPU_0_using curriculum 20 with window 20
+The current update step is 722
+GPU_0_using curriculum 20 with window 20
+The current update step is 741
+GPU_0_using curriculum 20 with window 20
+The current update step is 760
+The current seed is 3667182760058648840
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 71.324
+ *   Acc@1 74.182
+ *   Acc@1 71.078
+ *   Acc@1 74.209
+ *   Acc@1 71.078
+ *   Acc@1 74.128
+ *   Acc@1 70.833
+ *   Acc@1 74.073
+ *   Acc@1 71.078
+ *   Acc@1 74.100
+ *   Acc@1 70.833
+ *   Acc@1 74.128
+ *   Acc@1 70.833
+ *   Acc@1 74.100
+ *   Acc@1 70.833
+ *   Acc@1 74.073
+ *   Acc@1 70.588
+ *   Acc@1 74.291
+ *   Acc@1 70.588
+ *   Acc@1 74.182
+ *   Acc@1 70.343
+ *   Acc@1 74.182
+ *   Acc@1 70.588
+ *   Acc@1 74.237
+ *   Acc@1 71.324
+ *   Acc@1 74.209
+ *   Acc@1 71.324
+ *   Acc@1 74.182
+ *   Acc@1 71.078
+ *   Acc@1 74.128
+ *   Acc@1 70.833
+ *   Acc@1 74.128
+Training for 300 epoch: 71.07843137254902
+Training for 600 epoch: 70.95588235294117
+Training for 1000 epoch: 70.83333333333333
+Training for 3000 epoch: 70.7720588235294
+Training for 300 epoch: 74.19574700109051
+Training for 600 epoch: 74.17529989094874
+Training for 1000 epoch: 74.13440567066522
+Training for 3000 epoch: 74.12758996728462
+[[71.07843137254902, 70.95588235294117, 70.83333333333333, 70.7720588235294], [74.19574700109051, 74.17529989094874, 74.13440567066522, 74.12758996728462]]
+train loss 0.5409062575292951, epoch 39, best loss 0.5149613806699589, best_epoch 29
+GPU_0_using curriculum 20 with window 20
+The current update step is 779
+GPU_0_using curriculum 20 with window 20
+The current update step is 798
+GPU_0_using curriculum 20 with window 20
+The current update step is 817
+GPU_0_using curriculum 20 with window 20
+The current update step is 836
+GPU_0_using curriculum 20 with window 20
+The current update step is 855
+The current seed is 3041859377029905323
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 70.098
+ *   Acc@1 74.373
+ *   Acc@1 70.098
+ *   Acc@1 74.373
+ *   Acc@1 69.853
+ *   Acc@1 74.346
+ *   Acc@1 69.853
+ *   Acc@1 74.318
+ *   Acc@1 68.382
+ *   Acc@1 74.100
+ *   Acc@1 68.627
+ *   Acc@1 74.128
+ *   Acc@1 68.873
+ *   Acc@1 74.155
+ *   Acc@1 69.118
+ *   Acc@1 74.237
+ *   Acc@1 68.137
+ *   Acc@1 73.473
+ *   Acc@1 67.892
+ *   Acc@1 73.419
+ *   Acc@1 68.137
+ *   Acc@1 73.473
+ *   Acc@1 68.137
+ *   Acc@1 73.446
+ *   Acc@1 68.627
+ *   Acc@1 73.882
+ *   Acc@1 68.627
+ *   Acc@1 73.828
+ *   Acc@1 68.873
+ *   Acc@1 73.773
+ *   Acc@1 68.873
+ *   Acc@1 73.664
+Training for 300 epoch: 68.81127450980392
+Training for 600 epoch: 68.81127450980392
+Training for 1000 epoch: 68.93382352941177
+Training for 3000 epoch: 68.99509803921569
+Training for 300 epoch: 73.95719738276989
+Training for 600 epoch: 73.93675027262813
+Training for 1000 epoch: 73.93675027262813
+Training for 3000 epoch: 73.91630316248637
+[[68.81127450980392, 68.81127450980392, 68.93382352941177, 68.99509803921569], [73.95719738276989, 73.93675027262813, 73.93675027262813, 73.91630316248637]]
+train loss 0.4088766163087073, epoch 44, best loss 0.4088766163087073, best_epoch 44
+GPU_0_using curriculum 20 with window 20
+The current update step is 874
+GPU_0_using curriculum 20 with window 20
+The current update step is 893
+GPU_0_using curriculum 20 with window 20
+The current update step is 912
+GPU_0_using curriculum 20 with window 20
+The current update step is 931
+GPU_0_using curriculum 20 with window 20
+The current update step is 950
+The current seed is 15442908924463222986
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 72.059
+ *   Acc@1 74.291
+ *   Acc@1 72.304
+ *   Acc@1 74.264
+ *   Acc@1 72.304
+ *   Acc@1 74.264
+ *   Acc@1 72.059
+ *   Acc@1 74.291
+ *   Acc@1 69.608
+ *   Acc@1 74.618
+ *   Acc@1 69.608
+ *   Acc@1 74.864
+ *   Acc@1 69.853
+ *   Acc@1 74.918
+ *   Acc@1 69.608
+ *   Acc@1 74.918
+ *   Acc@1 71.814
+ *   Acc@1 74.237
+ *   Acc@1 72.304
+ *   Acc@1 74.264
+ *   Acc@1 72.549
+ *   Acc@1 74.237
+ *   Acc@1 72.794
+ *   Acc@1 73.746
+ *   Acc@1 72.549
+ *   Acc@1 74.155
+ *   Acc@1 72.549
+ *   Acc@1 74.128
+ *   Acc@1 72.549
+ *   Acc@1 74.128
+ *   Acc@1 72.059
+ *   Acc@1 74.100
+Training for 300 epoch: 71.50735294117648
+Training for 600 epoch: 71.69117647058823
+Training for 1000 epoch: 71.81372549019608
+Training for 3000 epoch: 71.62990196078432
+Training for 300 epoch: 74.3252453653217
+Training for 600 epoch: 74.37977099236642
+Training for 1000 epoch: 74.386586695747
+Training for 3000 epoch: 74.2639040348964
+[[71.50735294117648, 71.69117647058823, 71.81372549019608, 71.62990196078432], [74.3252453653217, 74.37977099236642, 74.386586695747, 74.2639040348964]]
+train loss 0.5552710404247858, epoch 49, best loss 0.4088766163087073, best_epoch 44
+GPU_0_using curriculum 20 with window 20
+The current update step is 969
+GPU_0_using curriculum 20 with window 20
+The current update step is 988
+GPU_0_using curriculum 20 with window 20
+The current update step is 1007
+GPU_0_using curriculum 20 with window 20
+The current update step is 1026
+GPU_0_using curriculum 20 with window 20
+The current update step is 1045
+The current seed is 17356084171073946426
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 70.833
+ *   Acc@1 74.537
+ *   Acc@1 71.078
+ *   Acc@1 74.427
+ *   Acc@1 71.078
+ *   Acc@1 74.318
+ *   Acc@1 70.833
+ *   Acc@1 74.318
+ *   Acc@1 71.569
+ *   Acc@1 74.073
+ *   Acc@1 70.833
+ *   Acc@1 74.019
+ *   Acc@1 70.833
+ *   Acc@1 74.019
+ *   Acc@1 70.833
+ *   Acc@1 74.046
+ *   Acc@1 69.853
+ *   Acc@1 74.700
+ *   Acc@1 69.853
+ *   Acc@1 74.700
+ *   Acc@1 70.098
+ *   Acc@1 74.700
+ *   Acc@1 69.608
+ *   Acc@1 74.864
+ *   Acc@1 69.118
+ *   Acc@1 74.537
+ *   Acc@1 69.118
+ *   Acc@1 74.564
+ *   Acc@1 69.363
+ *   Acc@1 74.646
+ *   Acc@1 69.118
+ *   Acc@1 74.700
+Training for 300 epoch: 70.34313725490196
+Training for 600 epoch: 70.22058823529412
+Training for 1000 epoch: 70.34313725490196
+Training for 3000 epoch: 70.09803921568627
+Training for 300 epoch: 74.46155943293348
+Training for 600 epoch: 74.42748091603053
+Training for 1000 epoch: 74.42066521264994
+Training for 3000 epoch: 74.48200654307524
+[[70.34313725490196, 70.22058823529412, 70.34313725490196, 70.09803921568627], [74.46155943293348, 74.42748091603053, 74.42066521264994, 74.48200654307524]]
+train loss 0.46402687276332694, epoch 54, best loss 0.4088766163087073, best_epoch 44
+GPU_0_using curriculum 20 with window 20
+The current update step is 1064
+GPU_0_using curriculum 20 with window 20
+The current update step is 1083
+GPU_0_using curriculum 20 with window 20
+The current update step is 1102
+GPU_0_using curriculum 20 with window 20
+The current update step is 1121
+GPU_0_using curriculum 20 with window 20
+The current update step is 1140
+The current seed is 12277904906112916914
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 72.304
+ *   Acc@1 74.046
+ *   Acc@1 72.304
+ *   Acc@1 74.019
+ *   Acc@1 72.304
+ *   Acc@1 74.019
+ *   Acc@1 72.304
+ *   Acc@1 73.964
+ *   Acc@1 72.304
+ *   Acc@1 74.346
+ *   Acc@1 72.059
+ *   Acc@1 74.237
+ *   Acc@1 72.059
+ *   Acc@1 74.264
+ *   Acc@1 71.814
+ *   Acc@1 74.318
+ *   Acc@1 72.549
+ *   Acc@1 73.828
+ *   Acc@1 72.549
+ *   Acc@1 73.828
+ *   Acc@1 72.549
+ *   Acc@1 73.991
+ *   Acc@1 72.549
+ *   Acc@1 73.909
+ *   Acc@1 70.588
+ *   Acc@1 74.537
+ *   Acc@1 70.588
+ *   Acc@1 74.509
+ *   Acc@1 70.588
+ *   Acc@1 74.509
+ *   Acc@1 70.588
+ *   Acc@1 74.455
+Training for 300 epoch: 71.93627450980392
+Training for 600 epoch: 71.875
+Training for 1000 epoch: 71.875
+Training for 3000 epoch: 71.81372549019608
+Training for 300 epoch: 74.18893129770993
+Training for 600 epoch: 74.14803707742638
+Training for 1000 epoch: 74.19574700109051
+Training for 3000 epoch: 74.16166848418757
+[[71.93627450980392, 71.875, 71.875, 71.81372549019608], [74.18893129770993, 74.14803707742638, 74.19574700109051, 74.16166848418757]]
+train loss 0.46487715495841714, epoch 59, best loss 0.4088766163087073, best_epoch 44
+GPU_0_using curriculum 20 with window 20
+The current update step is 1159
+GPU_0_using curriculum 20 with window 20
+The current update step is 1178
+GPU_0_using curriculum 20 with window 20
+The current update step is 1197
+GPU_0_using curriculum 20 with window 20
+The current update step is 1216
+GPU_0_using curriculum 20 with window 20
+The current update step is 1235
+The current seed is 8710175378715219916
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 72.304
+ *   Acc@1 74.209
+ *   Acc@1 72.304
+ *   Acc@1 74.237
+ *   Acc@1 72.304
+ *   Acc@1 74.155
+ *   Acc@1 72.059
+ *   Acc@1 74.100
+ *   Acc@1 70.588
+ *   Acc@1 74.564
+ *   Acc@1 70.098
+ *   Acc@1 74.618
+ *   Acc@1 69.853
+ *   Acc@1 74.809
+ *   Acc@1 69.608
+ *   Acc@1 74.836
+ *   Acc@1 69.608
+ *   Acc@1 74.673
+ *   Acc@1 69.608
+ *   Acc@1 74.673
+ *   Acc@1 69.363
+ *   Acc@1 74.809
+ *   Acc@1 69.363
+ *   Acc@1 74.782
+ *   Acc@1 69.853
+ *   Acc@1 74.646
+ *   Acc@1 70.098
+ *   Acc@1 74.618
+ *   Acc@1 70.098
+ *   Acc@1 74.346
+ *   Acc@1 70.833
+ *   Acc@1 74.400
+Training for 300 epoch: 70.58823529411765
+Training for 600 epoch: 70.52696078431373
+Training for 1000 epoch: 70.40441176470588
+Training for 3000 epoch: 70.4656862745098
+Training for 300 epoch: 74.52290076335878
+Training for 600 epoch: 74.53653217011995
+Training for 1000 epoch: 74.52971646673936
+Training for 3000 epoch: 74.52971646673936
+[[70.58823529411765, 70.52696078431373, 70.40441176470588, 70.4656862745098], [74.52290076335878, 74.53653217011995, 74.52971646673936, 74.52971646673936]]
+train loss 0.44540715402839226, epoch 64, best loss 0.4088766163087073, best_epoch 44
+GPU_0_using curriculum 20 with window 20
+The current update step is 1254
+GPU_0_using curriculum 20 with window 20
+The current update step is 1273
+GPU_0_using curriculum 20 with window 20
+The current update step is 1292
+GPU_0_using curriculum 20 with window 20
+The current update step is 1311
+GPU_0_using curriculum 20 with window 20
+The current update step is 1330
+The current seed is 11359388741580715074
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 71.078
+ *   Acc@1 74.291
+ *   Acc@1 71.078
+ *   Acc@1 74.318
+ *   Acc@1 71.078
+ *   Acc@1 74.264
+ *   Acc@1 71.078
+ *   Acc@1 74.291
+ *   Acc@1 72.059
+ *   Acc@1 74.155
+ *   Acc@1 72.059
+ *   Acc@1 74.182
+ *   Acc@1 72.059
+ *   Acc@1 74.209
+ *   Acc@1 72.059
+ *   Acc@1 74.291
+ *   Acc@1 69.363
+ *   Acc@1 74.509
+ *   Acc@1 69.363
+ *   Acc@1 74.564
+ *   Acc@1 69.608
+ *   Acc@1 74.591
+ *   Acc@1 69.853
+ *   Acc@1 74.618
+ *   Acc@1 72.304
+ *   Acc@1 74.128
+ *   Acc@1 72.304
+ *   Acc@1 74.237
+ *   Acc@1 72.059
+ *   Acc@1 74.291
+ *   Acc@1 71.814
+ *   Acc@1 74.291
+Training for 300 epoch: 71.20098039215686
+Training for 600 epoch: 71.20098039215686
+Training for 1000 epoch: 71.20098039215686
+Training for 3000 epoch: 71.20098039215686
+Training for 300 epoch: 74.270719738277
+Training for 600 epoch: 74.3252453653217
+Training for 1000 epoch: 74.33887677208287
+Training for 3000 epoch: 74.37295528898582
+[[71.20098039215686, 71.20098039215686, 71.20098039215686, 71.20098039215686], [74.270719738277, 74.3252453653217, 74.33887677208287, 74.37295528898582]]
+train loss 0.44856731822732493, epoch 69, best loss 0.4088766163087073, best_epoch 44
+GPU_0_using curriculum 20 with window 20
+The current update step is 1349
+GPU_0_using curriculum 20 with window 20
+The current update step is 1368
+GPU_0_using curriculum 20 with window 20
+The current update step is 1387
+GPU_0_using curriculum 20 with window 20
+The current update step is 1406
+GPU_0_using curriculum 20 with window 20
+The current update step is 1425
+The current seed is 3861743448470806438
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 70.833
+ *   Acc@1 74.618
+ *   Acc@1 70.588
+ *   Acc@1 74.564
+ *   Acc@1 70.588
+ *   Acc@1 74.646
+ *   Acc@1 70.098
+ *   Acc@1 74.618
+ *   Acc@1 70.833
+ *   Acc@1 74.564
+ *   Acc@1 71.324
+ *   Acc@1 74.400
+ *   Acc@1 71.324
+ *   Acc@1 74.373
+ *   Acc@1 72.304
+ *   Acc@1 74.155
+ *   Acc@1 71.569
+ *   Acc@1 74.864
+ *   Acc@1 72.304
+ *   Acc@1 74.209
+ *   Acc@1 72.059
+ *   Acc@1 74.400
+ *   Acc@1 72.304
+ *   Acc@1 74.400
+ *   Acc@1 69.608
+ *   Acc@1 74.455
+ *   Acc@1 69.608
+ *   Acc@1 74.427
+ *   Acc@1 69.363
+ *   Acc@1 74.455
+ *   Acc@1 69.118
+ *   Acc@1 74.564
+Training for 300 epoch: 70.71078431372548
+Training for 600 epoch: 70.95588235294119
+Training for 1000 epoch: 70.83333333333334
+Training for 3000 epoch: 70.95588235294117
+Training for 300 epoch: 74.62513631406762
+Training for 600 epoch: 74.40021810250818
+Training for 1000 epoch: 74.46837513631407
+Training for 3000 epoch: 74.43429661941113
+[[70.71078431372548, 70.95588235294119, 70.83333333333334, 70.95588235294117], [74.62513631406762, 74.40021810250818, 74.46837513631407, 74.43429661941113]]
+train loss 0.3956477354761038, epoch 74, best loss 0.3956477354761038, best_epoch 74
+GPU_0_using curriculum 20 with window 20
+The current update step is 1444
+GPU_0_using curriculum 20 with window 20
+The current update step is 1463
+GPU_0_using curriculum 20 with window 20
+The current update step is 1482
+GPU_0_using curriculum 20 with window 20
+The current update step is 1501
+GPU_0_using curriculum 20 with window 20
+The current update step is 1520
+The current seed is 799939380648041138
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 69.853
+ *   Acc@1 74.400
+ *   Acc@1 69.853
+ *   Acc@1 74.427
+ *   Acc@1 69.853
+ *   Acc@1 74.427
+ *   Acc@1 69.363
+ *   Acc@1 74.373
+ *   Acc@1 70.098
+ *   Acc@1 74.482
+ *   Acc@1 70.098
+ *   Acc@1 74.646
+ *   Acc@1 70.098
+ *   Acc@1 74.618
+ *   Acc@1 69.853
+ *   Acc@1 74.591
+ *   Acc@1 71.324
+ *   Acc@1 74.700
+ *   Acc@1 71.569
+ *   Acc@1 74.673
+ *   Acc@1 71.324
+ *   Acc@1 74.591
+ *   Acc@1 71.078
+ *   Acc@1 74.618
+ *   Acc@1 69.118
+ *   Acc@1 74.700
+ *   Acc@1 69.118
+ *   Acc@1 74.646
+ *   Acc@1 69.118
+ *   Acc@1 74.618
+ *   Acc@1 68.873
+ *   Acc@1 74.482
+Training for 300 epoch: 70.09803921568627
+Training for 600 epoch: 70.1593137254902
+Training for 1000 epoch: 70.09803921568627
+Training for 3000 epoch: 69.79166666666667
+Training for 300 epoch: 74.5706106870229
+Training for 600 epoch: 74.59787350054526
+Training for 1000 epoch: 74.56379498364231
+Training for 3000 epoch: 74.5160850599782
+[[70.09803921568627, 70.1593137254902, 70.09803921568627, 69.79166666666667], [74.5706106870229, 74.59787350054526, 74.56379498364231, 74.5160850599782]]
+train loss 0.35442070310352414, epoch 79, best loss 0.35442070310352414, best_epoch 79
+GPU_0_using curriculum 20 with window 20
+The current update step is 1539
+GPU_0_using curriculum 20 with window 20
+The current update step is 1558
+GPU_0_using curriculum 20 with window 20
+The current update step is 1577
+GPU_0_using curriculum 20 with window 20
+The current update step is 1596
+GPU_0_using curriculum 20 with window 20
+The current update step is 1615
+The current seed is 6440208374705508014
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 71.078
+ *   Acc@1 74.427
+ *   Acc@1 71.078
+ *   Acc@1 74.509
+ *   Acc@1 70.833
+ *   Acc@1 74.509
+ *   Acc@1 71.078
+ *   Acc@1 74.537
+ *   Acc@1 70.588
+ *   Acc@1 74.346
+ *   Acc@1 70.343
+ *   Acc@1 74.455
+ *   Acc@1 70.098
+ *   Acc@1 74.537
+ *   Acc@1 69.608
+ *   Acc@1 74.373
+ *   Acc@1 70.833
+ *   Acc@1 74.427
+ *   Acc@1 70.588
+ *   Acc@1 74.537
+ *   Acc@1 70.343
+ *   Acc@1 74.373
+ *   Acc@1 70.343
+ *   Acc@1 74.100
+ *   Acc@1 68.873
+ *   Acc@1 74.945
+ *   Acc@1 68.627
+ *   Acc@1 74.973
+ *   Acc@1 68.382
+ *   Acc@1 74.918
+ *   Acc@1 68.873
+ *   Acc@1 74.918
+Training for 300 epoch: 70.34313725490196
+Training for 600 epoch: 70.1593137254902
+Training for 1000 epoch: 69.9142156862745
+Training for 3000 epoch: 69.97549019607843
+Training for 300 epoch: 74.53653217011995
+Training for 600 epoch: 74.61832061068702
+Training for 1000 epoch: 74.58424209378407
+Training for 3000 epoch: 74.48200654307524
+[[70.34313725490196, 70.1593137254902, 69.9142156862745, 69.97549019607843], [74.53653217011995, 74.61832061068702, 74.58424209378407, 74.48200654307524]]
+train loss 0.35410526030846223, epoch 84, best loss 0.35410526030846223, best_epoch 84
+GPU_0_using curriculum 20 with window 20
+The current update step is 1634
+GPU_0_using curriculum 20 with window 20
+The current update step is 1653
+GPU_0_using curriculum 20 with window 20
+The current update step is 1672
+GPU_0_using curriculum 20 with window 20
+The current update step is 1691
+GPU_0_using curriculum 20 with window 20
+The current update step is 1710
+The current seed is 12905928334426968392
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 69.608
+ *   Acc@1 74.482
+ *   Acc@1 69.608
+ *   Acc@1 74.537
+ *   Acc@1 69.118
+ *   Acc@1 74.455
+ *   Acc@1 69.118
+ *   Acc@1 74.537
+ *   Acc@1 72.059
+ *   Acc@1 74.100
+ *   Acc@1 72.059
+ *   Acc@1 74.128
+ *   Acc@1 71.814
+ *   Acc@1 74.237
+ *   Acc@1 71.814
+ *   Acc@1 74.346
+ *   Acc@1 72.304
+ *   Acc@1 74.128
+ *   Acc@1 72.304
+ *   Acc@1 74.128
+ *   Acc@1 72.059
+ *   Acc@1 74.237
+ *   Acc@1 72.304
+ *   Acc@1 74.264
+ *   Acc@1 72.549
+ *   Acc@1 74.100
+ *   Acc@1 72.549
+ *   Acc@1 74.209
+ *   Acc@1 72.549
+ *   Acc@1 74.182
+ *   Acc@1 72.304
+ *   Acc@1 74.209
+Training for 300 epoch: 71.62990196078432
+Training for 600 epoch: 71.62990196078432
+Training for 1000 epoch: 71.38480392156863
+Training for 3000 epoch: 71.38480392156863
+Training for 300 epoch: 74.20256270447109
+Training for 600 epoch: 74.25027262813522
+Training for 1000 epoch: 74.27753544165758
+Training for 3000 epoch: 74.33887677208287
+[[71.62990196078432, 71.62990196078432, 71.38480392156863, 71.38480392156863], [74.20256270447109, 74.25027262813522, 74.27753544165758, 74.33887677208287]]
+train loss 0.4004892240173814, epoch 89, best loss 0.35410526030846223, best_epoch 84
+GPU_0_using curriculum 20 with window 20
+The current update step is 1729
+GPU_0_using curriculum 20 with window 20
+The current update step is 1748
+GPU_0_using curriculum 20 with window 20
+The current update step is 1767
+GPU_0_using curriculum 20 with window 20
+The current update step is 1786
+GPU_0_using curriculum 20 with window 20
+The current update step is 1805
+The current seed is 16900906414200959494
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 72.794
+ *   Acc@1 74.128
+ *   Acc@1 71.814
+ *   Acc@1 74.182
+ *   Acc@1 71.569
+ *   Acc@1 74.346
+ *   Acc@1 70.833
+ *   Acc@1 74.618
+ *   Acc@1 69.608
+ *   Acc@1 74.755
+ *   Acc@1 69.608
+ *   Acc@1 74.727
+ *   Acc@1 69.853
+ *   Acc@1 74.809
+ *   Acc@1 69.608
+ *   Acc@1 75.000
+ *   Acc@1 69.853
+ *   Acc@1 74.646
+ *   Acc@1 69.608
+ *   Acc@1 74.564
+ *   Acc@1 69.608
+ *   Acc@1 74.564
+ *   Acc@1 69.608
+ *   Acc@1 74.864
+ *   Acc@1 69.118
+ *   Acc@1 74.864
+ *   Acc@1 69.118
+ *   Acc@1 74.755
+ *   Acc@1 69.118
+ *   Acc@1 74.755
+ *   Acc@1 68.382
+ *   Acc@1 74.591
+Training for 300 epoch: 70.34313725490196
+Training for 600 epoch: 70.03676470588236
+Training for 1000 epoch: 70.03676470588236
+Training for 3000 epoch: 69.6078431372549
+Training for 300 epoch: 74.59787350054526
+Training for 600 epoch: 74.55697928026171
+Training for 1000 epoch: 74.61832061068702
+Training for 3000 epoch: 74.76826608505998
+[[70.34313725490196, 70.03676470588236, 70.03676470588236, 69.6078431372549], [74.59787350054526, 74.55697928026171, 74.61832061068702, 74.76826608505998]]
+train loss 0.29564152755485107, epoch 94, best loss 0.29564152755485107, best_epoch 94
+GPU_0_using curriculum 20 with window 20
+The current update step is 1824
+GPU_0_using curriculum 20 with window 20
+The current update step is 1843
+GPU_0_using curriculum 20 with window 20
+The current update step is 1862
+GPU_0_using curriculum 20 with window 20
+The current update step is 1881
+GPU_0_using curriculum 20 with window 20
+The current update step is 1900
+The current seed is 4001681820122267576
+The current lr is: 0.001
+Testing Results:
+ *   Acc@1 71.324
+ *   Acc@1 72.492
+ *   Acc@1 71.814
+ *   Acc@1 72.628
+ *   Acc@1 71.814
+ *   Acc@1 72.710
+ *   Acc@1 71.814
+ *   Acc@1 72.846
+ *   Acc@1 70.098
+ *   Acc@1 71.538
+ *   Acc@1 70.343
+ *   Acc@1 71.565
+ *   Acc@1 70.343
+ *   Acc@1 71.756
+ *   Acc@1 71.324
+ *   Acc@1 72.083
+ *   Acc@1 72.549
+ *   Acc@1 73.391
+ *   Acc@1 72.304
+ *   Acc@1 73.582
+ *   Acc@1 72.549
+ *   Acc@1 73.691
+ *   Acc@1 73.039
+ *   Acc@1 73.691
+ *   Acc@1 72.794
+ *   Acc@1 74.100
+ *   Acc@1 72.794
+ *   Acc@1 74.291
+ *   Acc@1 72.794
+ *   Acc@1 74.346
+ *   Acc@1 72.549
+ *   Acc@1 74.482
+Training for 300 epoch: 71.69117647058825
+Training for 600 epoch: 71.81372549019608
+Training for 1000 epoch: 71.875
+Training for 3000 epoch: 72.18137254901961
+Training for 300 epoch: 72.88031624863686
+Training for 600 epoch: 73.01663031624864
+Training for 1000 epoch: 73.12568157033806
+Training for 3000 epoch: 73.27562704471102
+[[71.69117647058825, 71.81372549019608, 71.875, 72.18137254901961], [72.88031624863686, 73.01663031624864, 73.12568157033806, 73.27562704471102]]
+train loss 0.3751769312205465, epoch 99, best loss 0.29564152755485107, best_epoch 94
+=== Final results:
+{'acc': 72.48774509803921, 'test': [72.42647058823529, 72.48774509803921, 72.36519607843137, 72.24264705882352], 'train': [72.42647058823529, 72.48774509803921, 72.36519607843137, 72.24264705882352], 'ind': 1, 'epoch': 20, 'data': array([[-0.04457714, -0.05913338, -0.02986332, ..., -0.02472377,
+         0.00362055,  0.03185148],
+       [-0.06429085,  0.0225977 , -0.00205496, ..., -0.01025883,
+        -0.0100491 ,  0.00417784],
+       [-0.03973419, -0.08251296,  0.00528686, ..., -0.02843942,
+        -0.02311384,  0.00712876],
+       ...,
+       [ 0.01435373,  0.03811881, -0.03476683, ..., -0.02634965,
+        -0.0571783 ,  0.01917331],
+       [-0.02363222,  0.078951  ,  0.01893687, ...,  0.08600096,
+        -0.00659117, -0.00402828],
+       [ 0.05310598,  0.09246357,  0.01114311, ...,  0.08196146,
+        -0.04006041, -0.10337681]], shape=(10, 768), dtype=float32)}
+Training exit code: 0
+Found checkpoint: grad_save_init_IPC_5_no_curr_unroll_20mrpc_mlp_ipc5_w20_seed0.pth
+Using device: cuda
+Loading validation data from ./scripts/mrpc_emb...
+Val set shape: x=(408, 768), y=(408,)
+Loading synthetic data from grad_save_init_IPC_5_no_curr_unroll_20mrpc_mlp_ipc5_w20_seed0.pth...
+Synthetic set shape: X=(10, 768), y=(10,)
+Training fresh TextMLP on synthetic set and evaluating on real MRPC val...
+[Epoch 200/1000] train_loss=0.0015 val_acc=71.08%
+[Epoch 400/1000] train_loss=0.0004 val_acc=72.06%
+[Epoch 600/1000] train_loss=0.0002 val_acc=72.30%
+[Epoch 800/1000] train_loss=0.0001 val_acc=72.55%
+[Epoch 1000/1000] train_loss=0.0001 val_acc=72.79%
+
+=== FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 72.79% ===
+Eval exit code: 0

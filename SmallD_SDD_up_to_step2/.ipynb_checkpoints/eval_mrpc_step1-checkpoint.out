@@ -1,0 +1,9 @@
+Hostname: b-31-113
+Python:
+/scratch/zz3645/conda_envs/nlp_env/bin/python
+Python 3.10.19
+CUDA visible devices: 0
+Using device: cuda
+Loading validation data from ./scripts/mrpc_emb...
+Val set shape: x=(408, 768), y=(408,)
+Loading synthetic data from grad_save_init_IPC_5_no_curr_unroll_20mrpc_mlp_ipc5.pth...

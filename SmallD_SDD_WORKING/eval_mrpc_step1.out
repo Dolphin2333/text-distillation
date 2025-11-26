@@ -1,0 +1,18 @@
+Hostname: b-31-163
+Python:
+/scratch/zz3645/conda_envs/nlp_env/bin/python
+Python 3.10.19
+CUDA visible devices: 0
+Using device: cuda
+Loading validation data from ./scripts/mrpc_emb...
+Val set shape: x=(408, 768), y=(408,)
+Loading synthetic data from grad_save_init_IPC_5_no_curr_unroll_20mrpc_mlp_ipc5.pth...
+Synthetic set shape: X=(10, 768), y=(10,)
+Training fresh TextMLP on synthetic set and evaluating on real MRPC val...
+[Epoch 200/1000] train_loss=0.0013 val_acc=69.61%
+[Epoch 400/1000] train_loss=0.0004 val_acc=69.36%
+[Epoch 600/1000] train_loss=0.0002 val_acc=69.61%
+[Epoch 800/1000] train_loss=0.0001 val_acc=69.61%
+[Epoch 1000/1000] train_loss=0.0001 val_acc=69.61%
+
+=== FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 69.61% ===

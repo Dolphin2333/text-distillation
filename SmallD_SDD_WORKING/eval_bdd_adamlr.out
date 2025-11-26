@@ -1,0 +1,107 @@
+Hostname: b-31-1
+Python is:
+/scratch/zz3645/conda_envs/nlp_env/bin/python
+Python 3.10.19
+CUDA visible devices: 0
+Using device: cuda
+MRPC val: 408 samples, dim=768, num_classes=2
+
+Found synthetic checkpoints:
+   out_step3_ipc05_s0_adamlr.h5
+   out_step3_ipc10_s1_adamlr.h5
+   out_step3_ipc15_s2_adamlr.h5
+   out_step3_ipc20_s3_adamlr.h5
+   out_step3_ipc25_s4_adamlr.h5
+   out_step3_ipc30_s5_adamlr.h5
+
+Evaluating each synthetic dataset with a fresh student (5 random restarts)...
+
+================================================================================
+FILE: out_step3_ipc05_s0_adamlr.h5
+  Parsed IPC: 5, stage: 0
+--------------------------------------------------------------------------------
+  Synthetic data: N=10, d_emb=768
+  Inferred IPC: 5
+    Run 1/5: val_acc = 70.83%
+    Run 2/5: val_acc = 70.59%
+    Run 3/5: val_acc = 71.08%
+    Run 4/5: val_acc = 69.61%
+    Run 5/5: val_acc = 70.83%
+  ==> Mean val accuracy over 5 runs: 70.59% ± 0.51%
+
+================================================================================
+FILE: out_step3_ipc10_s1_adamlr.h5
+  Parsed IPC: 10, stage: 1
+--------------------------------------------------------------------------------
+  Synthetic data: N=20, d_emb=768
+  Inferred IPC: 10
+    Run 1/5: val_acc = 71.81%
+    Run 2/5: val_acc = 72.30%
+    Run 3/5: val_acc = 72.55%
+    Run 4/5: val_acc = 72.06%
+    Run 5/5: val_acc = 71.57%
+  ==> Mean val accuracy over 5 runs: 72.06% ± 0.35%
+
+================================================================================
+FILE: out_step3_ipc15_s2_adamlr.h5
+  Parsed IPC: 15, stage: 2
+--------------------------------------------------------------------------------
+  Synthetic data: N=30, d_emb=768
+  Inferred IPC: 15
+    Run 1/5: val_acc = 71.57%
+    Run 2/5: val_acc = 72.79%
+    Run 3/5: val_acc = 71.81%
+    Run 4/5: val_acc = 72.30%
+    Run 5/5: val_acc = 72.06%
+  ==> Mean val accuracy over 5 runs: 72.11% ± 0.42%
+
+================================================================================
+FILE: out_step3_ipc20_s3_adamlr.h5
+  Parsed IPC: 20, stage: 3
+--------------------------------------------------------------------------------
+  Synthetic data: N=40, d_emb=768
+  Inferred IPC: 20
+    Run 1/5: val_acc = 72.06%
+    Run 2/5: val_acc = 70.59%
+    Run 3/5: val_acc = 72.06%
+    Run 4/5: val_acc = 72.30%
+    Run 5/5: val_acc = 72.06%
+  ==> Mean val accuracy over 5 runs: 71.81% ± 0.62%
+
+================================================================================
+FILE: out_step3_ipc25_s4_adamlr.h5
+  Parsed IPC: 25, stage: 4
+--------------------------------------------------------------------------------
+  Synthetic data: N=50, d_emb=768
+  Inferred IPC: 25
+    Run 1/5: val_acc = 72.55%
+    Run 2/5: val_acc = 73.53%
+    Run 3/5: val_acc = 71.32%
+    Run 4/5: val_acc = 73.53%
+    Run 5/5: val_acc = 71.08%
+  ==> Mean val accuracy over 5 runs: 72.40% ± 1.05%
+
+================================================================================
+FILE: out_step3_ipc30_s5_adamlr.h5
+  Parsed IPC: 30, stage: 5
+--------------------------------------------------------------------------------
+  Synthetic data: N=60, d_emb=768
+  Inferred IPC: 30
+    Run 1/5: val_acc = 72.55%
+    Run 2/5: val_acc = 70.83%
+    Run 3/5: val_acc = 71.57%
+    Run 4/5: val_acc = 70.83%
+    Run 5/5: val_acc = 70.83%
+  ==> Mean val accuracy over 5 runs: 71.32% ± 0.68%
+
+
+################################################################################
+FINAL SUMMARY (sorted by IPC)
+################################################################################
+file                              IPC  stage     mean_acc      std_acc
+out_step3_ipc05_s0_adamlr.h5        5      0      0.7059      0.0051
+out_step3_ipc10_s1_adamlr.h5       10      1      0.7206      0.0035
+out_step3_ipc15_s2_adamlr.h5       15      2      0.7211      0.0042
+out_step3_ipc20_s3_adamlr.h5       20      3      0.7181      0.0062
+out_step3_ipc25_s4_adamlr.h5       25      4      0.7240      0.0105
+out_step3_ipc30_s5_adamlr.h5       30      5      0.7132      0.0068

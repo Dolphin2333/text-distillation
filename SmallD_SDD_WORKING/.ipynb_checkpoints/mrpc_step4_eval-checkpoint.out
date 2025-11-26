@@ -1,0 +1,59 @@
+
+======== STEP 4: FINAL EVALUATION ========
+
+--- Evaluating out_step3_ipc05_s0_adamlr.h5 ---
+  seed=0: acc=0.7034
+  seed=1: acc=0.7108
+  seed=2: acc=0.7059
+  seed=3: acc=0.6985
+  seed=4: acc=0.7083
+  --> MEAN=0.7054  STD=0.0042
+
+--- Evaluating out_step3_ipc10_s1_adamlr.h5 ---
+  seed=0: acc=0.7034
+  seed=1: acc=0.7083
+  seed=2: acc=0.7010
+  seed=3: acc=0.7059
+  seed=4: acc=0.7108
+  --> MEAN=0.7059  STD=0.0035
+
+--- Evaluating out_step3_ipc15_s2_adamlr.h5 ---
+  seed=0: acc=0.6985
+  seed=1: acc=0.7059
+  seed=2: acc=0.6936
+  seed=3: acc=0.7010
+  seed=4: acc=0.7108
+  --> MEAN=0.7020  STD=0.0059
+
+--- Evaluating out_step3_ipc20_s3_adamlr.h5 ---
+  seed=0: acc=0.7083
+  seed=1: acc=0.7034
+  seed=2: acc=0.7010
+  seed=3: acc=0.7059
+  seed=4: acc=0.7181
+  --> MEAN=0.7074  STD=0.0059
+
+--- Evaluating out_step3_ipc25_s4_adamlr.h5 ---
+  seed=0: acc=0.7059
+  seed=1: acc=0.7132
+  seed=2: acc=0.7108
+  seed=3: acc=0.7157
+  seed=4: acc=0.7108
+  --> MEAN=0.7113  STD=0.0033
+
+--- Evaluating out_step3_ipc30_s5_adamlr.h5 ---
+  seed=0: acc=0.7059
+  seed=1: acc=0.7132
+  seed=2: acc=0.7132
+  seed=3: acc=0.7132
+  seed=4: acc=0.7059
+  --> MEAN=0.7103  STD=0.0036
+
+========== FINAL SUMMARY ==========
+out_step3_ipc05_s0_adamlr.h5          mean=0.7054   std=0.0042
+out_step3_ipc10_s1_adamlr.h5          mean=0.7059   std=0.0035
+out_step3_ipc15_s2_adamlr.h5          mean=0.7020   std=0.0059
+out_step3_ipc20_s3_adamlr.h5          mean=0.7074   std=0.0059
+out_step3_ipc25_s4_adamlr.h5          mean=0.7113   std=0.0033
+out_step3_ipc30_s5_adamlr.h5          mean=0.7103   std=0.0036
+===================================

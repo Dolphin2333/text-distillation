@@ -1,0 +1,52 @@
+
+===== RANDOM REAL-SUBSET BASELINE (MRPC) =====
+IPCs: [5, 10, 15, 20, 25, 30]
+Seeds: [0, 1, 2, 3, 4]
+
+--- IPC = 5 ---
+  seed=0: acc=0.6397
+  seed=1: acc=0.4436
+  seed=2: acc=0.6495
+  seed=3: acc=0.4755
+  seed=4: acc=0.6471
+  -> MEAN=0.5711  STD=0.0917
+
+--- IPC = 10 ---
+  seed=0: acc=0.5343
+  seed=1: acc=0.4657
+  seed=2: acc=0.6029
+  seed=3: acc=0.5662
+  seed=4: acc=0.6397
+  -> MEAN=0.5618  STD=0.0596
+
+--- IPC = 15 ---
+  seed=0: acc=0.5588
+  seed=1: acc=0.5833
+  seed=2: acc=0.5882
+  seed=3: acc=0.5172
+  seed=4: acc=0.6152
+  -> MEAN=0.5725  STD=0.0330
+
+--- IPC = 20 ---
+  seed=0: acc=0.5613
+  seed=1: acc=0.5980
+  seed=2: acc=0.5711
+  seed=3: acc=0.5637
+  seed=4: acc=0.5809
+  -> MEAN=0.5750  STD=0.0134
+
+--- IPC = 25 ---
+  seed=0: acc=0.5637
+  seed=1: acc=0.6152
+  seed=2: acc=0.5784
+  seed=3: acc=0.5711
+  seed=4: acc=0.5711
+  -> MEAN=0.5799  STD=0.0182
+
+--- IPC = 30 ---
+  seed=0: acc=0.5784
+  seed=1: acc=0.6201
+  seed=2: acc=0.5980
+  seed=3: acc=0.5931
+  seed=4: acc=0.6029
+  -> MEAN=0.5985  STD=0.0135
