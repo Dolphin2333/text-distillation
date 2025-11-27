@@ -1,0 +1,27 @@
+===== Evaluating β = 0 series (debug) =====
+>>> [RUN] syn_ckpt=out_step5_debug_ipc5_beta0.h5, ipc=5, tag=tf_beta0_ipc5
+>>> [SUMMARY] tag=tf_beta0_ipc5, ipc=5, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 65.93% ===
+>>> [RUN] syn_ckpt=out_step5_debug_ipc10_beta0.h5, ipc=10, tag=tf_beta0_ipc10
+>>> [SUMMARY] tag=tf_beta0_ipc10, ipc=10, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 64.46% ===
+>>> [RUN] syn_ckpt=out_step5_debug_ipc15_beta0.h5, ipc=15, tag=tf_beta0_ipc15
+>>> [SUMMARY] tag=tf_beta0_ipc15, ipc=15, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 69.36% ===
+>>> [RUN] syn_ckpt=out_step5_debug_ipc20_beta0.h5, ipc=20, tag=tf_beta0_ipc20
+>>> [SUMMARY] tag=tf_beta0_ipc20, ipc=20, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 68.63% ===
+>>> [RUN] syn_ckpt=out_step5_debug_ipc25_beta0.h5, ipc=25, tag=tf_beta0_ipc25
+>>> [SUMMARY] tag=tf_beta0_ipc25, ipc=25, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 68.63% ===
+>>> [RUN] syn_ckpt=out_step5_debug_ipc30_beta0.h5, ipc=30, tag=tf_beta0_ipc30
+>>> [SUMMARY] tag=tf_beta0_ipc30, ipc=30, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 68.38% ===
+===== Evaluating β ≠ 0 Boost-DD series =====
+>>> [RUN] syn_ckpt=out_step5_ipc5_s0_tf_adamlr.h5, ipc=5, tag=tf_boost_ipc5
+>>> [SUMMARY] tag=tf_boost_ipc5, ipc=5, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 68.63% ===
+>>> [RUN] syn_ckpt=out_step5_ipc10_s1_tf_adamlr.h5, ipc=10, tag=tf_boost_ipc10
+>>> [SUMMARY] tag=tf_boost_ipc10, ipc=10, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 68.63% ===
+>>> [RUN] syn_ckpt=out_step5_ipc15_s2_tf_adamlr.h5, ipc=15, tag=tf_boost_ipc15
+>>> [SUMMARY] tag=tf_boost_ipc15, ipc=15, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 68.63% ===
+>>> [RUN] syn_ckpt=out_step5_ipc20_s3_tf_adamlr.h5, ipc=20, tag=tf_boost_ipc20
+>>> [SUMMARY] tag=tf_boost_ipc20, ipc=20, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 69.61% ===
+>>> [RUN] syn_ckpt=out_step5_ipc25_s4_tf_adamlr.h5, ipc=25, tag=tf_boost_ipc25
+>>> [SUMMARY] tag=tf_boost_ipc25, ipc=25, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 50.98% ===
+>>> [RUN] syn_ckpt=out_step5_ipc30_s5_tf_adamlr.h5, ipc=30, tag=tf_boost_ipc30
+>>> [SUMMARY] tag=tf_boost_ipc30, ipc=30, === FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 70.83% ===
+All transformer evals finished.

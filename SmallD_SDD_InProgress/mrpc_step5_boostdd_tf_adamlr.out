@@ -1,0 +1,12 @@
+Hostname: b-31-10
+Python path:
+/scratch/zz3645/conda_envs/nlp_env/bin/python
+Python 3.10.19
+CUDA_VISIBLE_DEVICES=0
+===== Stage 0: IPC=5 (Transformer, baseline) =====
+===== Stage 1: IPC=10 (Boost-DD from Stage 0) =====
+===== Stage 2: IPC=15 (Boost-DD from Stage 1) =====
+===== Stage 3: IPC=20 (Boost-DD from Stage 2) =====
+===== Stage 4: IPC=25 (Boost-DD from Stage 3) =====
+===== Stage 5: IPC=30 (Boost-DD from Stage 4) =====
+All Boost-DD Step 5 (Transformer + Adam LR) jobs completed.

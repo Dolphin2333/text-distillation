@@ -1,0 +1,7 @@
+Hostname: b-31-7
+Python is:
+/scratch/zz3645/conda_envs/nlp_env/bin/python
+Python 3.10.19
+CUDA visible devices: 0
+===== Stage 0: IPC=5 (no Boost-DD) =====
+===== Stage 1: IPC=10 (Boost-DD from Stage 0) =====

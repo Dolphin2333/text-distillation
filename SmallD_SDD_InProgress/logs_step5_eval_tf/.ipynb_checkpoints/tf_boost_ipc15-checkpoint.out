@@ -1,0 +1,17 @@
+Using device: cuda
+Loading validation data from ./scripts/mrpc_emb...
+Val set shape: x=(408, 768), y=(408,)
+Loading synthetic data from out_step5_ipc15_s2_tf_adamlr.h5...
+[load_synthetic_data] torch.load failed on 'out_step5_ipc15_s2_tf_adamlr.h5', will try HDF5. Error: invalid load key, 'H'.
+[load_synthetic_data] Trying to load 'out_step5_ipc15_s2_tf_adamlr.h5' as HDF5...
+Synthetic set shape: X=(30, 768), y=(30,)
+Using SDPA MATH backend for student training.
+Training fresh text_transformer on synthetic set and evaluating on real MRPC val...
+Building student model arch=text_transformer, width=256, d_emb=768, num_classes=2
+[Epoch 200/1000] train_loss=0.0000 val_acc=68.63%
+[Epoch 400/1000] train_loss=0.0000 val_acc=68.63%
+[Epoch 600/1000] train_loss=0.0000 val_acc=68.63%
+[Epoch 800/1000] train_loss=0.0000 val_acc=68.63%
+[Epoch 1000/1000] train_loss=0.0000 val_acc=68.63%
+
+=== FINAL DISTILLED-SET ACCURACY ON MRPC VAL: 68.63% ===

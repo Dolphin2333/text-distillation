@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/scratch/zz3645/SmallD_SDD_all_progress/SmallD_SDD_InProgress/main.py", line 140, in <module>
+    main_worker(args.gpu, ngpus_per_node, args)
+  File "/scratch/zz3645/SmallD_SDD_all_progress/SmallD_SDD_InProgress/framework/base.py", line 371, in main_worker
+    grad_tmp, losses_avg, distill_steps = train(train_loader, model, criterion, optimizer, epoch, device, distill_steps, args)
+  File "/scratch/zz3645/SmallD_SDD_all_progress/SmallD_SDD_InProgress/framework/base.py", line 529, in train
+    loss.backward()
+  File "/scratch/zz3645/conda_envs/test_tor/lib/python3.10/site-packages/torch/_tensor.py", line 525, in backward
+    torch.autograd.backward(
+  File "/scratch/zz3645/conda_envs/test_tor/lib/python3.10/site-packages/torch/autograd/__init__.py", line 267, in backward
+    _engine_run_backward(
+  File "/scratch/zz3645/conda_envs/test_tor/lib/python3.10/site-packages/torch/autograd/graph.py", line 744, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: derivative for aten::_scaled_dot_product_efficient_attention_backward is not implemented

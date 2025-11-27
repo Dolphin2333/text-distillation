@@ -1,0 +1,11 @@
+===== Evaluating β = 0 series (debug) =====
+>>> Evaluating syn_ckpt=out_step5_debug_ipc5_beta0.h5, ipc=5, tag=tf_beta0_ipc5
+>>> Evaluating syn_ckpt=out_step5_debug_ipc10_beta0.h5, ipc=10, tag=tf_beta0_ipc10
+>>> Evaluating syn_ckpt=out_step5_debug_ipc15_beta0.h5, ipc=15, tag=tf_beta0_ipc15
+>>> Evaluating syn_ckpt=out_step5_debug_ipc20_beta0.h5, ipc=20, tag=tf_beta0_ipc20
+>>> Evaluating syn_ckpt=out_step5_debug_ipc25_beta0.h5, ipc=25, tag=tf_beta0_ipc25
+>>> Evaluating syn_ckpt=out_step5_debug_ipc30_beta0.h5, ipc=30, tag=tf_beta0_ipc30
+===== Evaluating β ≠ 0 Boost-DD series =====
+>>> Evaluating syn_ckpt=out_step5_ipc5_s0_tf_adamlr.h5, ipc=5, tag=tf_boost_ipc5
+>>> Evaluating syn_ckpt=out_step5_ipc10_s1_tf_adamlr.h5, ipc=10, tag=tf_boost_ipc10
+>>> Evaluating syn_ckpt=out_step5_ipc15_s2_tf_adamlr.h5, ipc=15, tag=tf_boost_ipc15
