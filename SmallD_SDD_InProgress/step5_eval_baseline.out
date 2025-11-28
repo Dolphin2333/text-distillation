@@ -1,0 +1,51 @@
+Using device: cpu
+Train: X=(3668, 768), y=(3668,); num_classes=2
+Val:   X=(408, 768), y=(408,)
+
+--- IPC = 5 ---
+  seed=0: acc=0.6618
+  seed=1: acc=0.5025
+  seed=2: acc=0.6838
+  seed=3: acc=0.5147
+  seed=4: acc=0.6814
+  -> MEAN=0.6088  STD=0.0823
+
+--- IPC = 10 ---
+  seed=0: acc=0.5882
+  seed=1: acc=0.4534
+  seed=2: acc=0.6176
+  seed=3: acc=0.5907
+  seed=4: acc=0.6569
+  -> MEAN=0.5814  STD=0.0686
+
+--- IPC = 15 ---
+  seed=0: acc=0.6078
+  seed=1: acc=0.5784
+  seed=2: acc=0.5098
+  seed=3: acc=0.5784
+  seed=4: acc=0.5490
+  -> MEAN=0.5647  STD=0.0332
+
+--- IPC = 20 ---
+  seed=0: acc=0.5417
+  seed=1: acc=0.5735
+  seed=2: acc=0.5466
+  seed=3: acc=0.6054
+  seed=4: acc=0.6152
+  -> MEAN=0.5765  STD=0.0298
+
+--- IPC = 25 ---
+  seed=0: acc=0.5833
+  seed=1: acc=0.6299
+  seed=2: acc=0.5319
+  seed=3: acc=0.5809
+  seed=4: acc=0.5735
+  -> MEAN=0.5799  STD=0.0312
+
+--- IPC = 30 ---
+  seed=0: acc=0.5515
+  seed=1: acc=0.6029
+  seed=2: acc=0.5662
+  seed=3: acc=0.5098
+  seed=4: acc=0.6005
+  -> MEAN=0.5662  STD=0.0344

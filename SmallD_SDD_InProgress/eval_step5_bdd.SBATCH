@@ -36,7 +36,7 @@ run_eval () {
   echo ">>> [RUN] syn_ckpt=${syn_ckpt}, ipc=${ipc}, tag=${tag}"
 
   # Run eval and save detailed logs
-  python eval_step5_mrpc.py \
+  python eval_step5_train.py \
     --data_root "${DATA_ROOT}" \
     --syn_ckpt "${syn_ckpt}" \
     --num_classes 2 \

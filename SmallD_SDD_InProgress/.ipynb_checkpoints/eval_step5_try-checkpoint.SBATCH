@@ -23,7 +23,7 @@ which python
 python --version
 echo "CUDA visible devices: $CUDA_VISIBLE_DEVICES"
 
-python eval_step5_mrpc.py \
+python eval_step5_train.py \
   --data_root ./scripts/mrpc_emb \
   --syn_ckpt out_step5_mrpc_tf_ipc5_try2.pth \
   --num_classes 2 \
