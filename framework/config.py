@@ -230,8 +230,13 @@ def get_dataset(dataset, root, transform_train, transform_test, zca=False):
 
 # remove all the ToTensor() for cifar10
 def get_transform(dataset):
+    """Return (train, test) transforms for a dataset name."""
+    # Embedding datasets already provide tensor inputs, so skip image transforms.
+    if dataset.endswith('_emb'):
+        return None, None
+
     print(dataset)
-    if dataset == 'mrpc_emb':
+    if dataset == 'mrpc_emb':  # legacy fallback
         default_transform_train = None
         default_transform_test = None
     else:
