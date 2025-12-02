@@ -1,34 +1,31 @@
-"""Prepare AG News sentence embeddings for text distillation.
+# scripts/prepare_agnews_embeddings.py
 
-This script mirrors the MRPC pipeline but targets the AG News dataset:
-  * Loads AG News from HuggingFace datasets.
-  * Encodes each article text using a frozen Transformer (default: bert-base-uncased).
-  * Saves train/test (used as validation) embeddings/labels as .pt tensors.
-
-Run:
-    python scripts/prepare_agnews_embeddings.py \
-        --model bert-base-uncased \
-        --batch_size 64 \
-        --device cuda
-"""
-
-import argparse
 import os
-
 import torch
 from datasets import load_dataset
-from transformers import AutoModel, AutoTokenizer
+from transformers import AutoTokenizer, AutoModel
 from tqdm import tqdm
 
+def get_agnews_embeddings(
+    model_name="bert-base-uncased",
+    split="train",
+    batch_size=32,
+    device="cuda",
+):
+    """Encode AG News samples into CLS embeddings."""
+    ds = load_dataset("ag_news", split=split)
 
-def encode_split(dataset_name: str, split: str, tokenizer, model, batch_size: int, device: str):
-    ds = load_dataset(dataset_name, split=split)
-    embs, labels = [], []
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModel.from_pretrained(model_name).to(device)
+    model.eval()
 
-    for idx in tqdm(range(0, len(ds), batch_size), desc=f"{split} batches"):
-        batch = ds[idx: idx + batch_size]
+    all_embs = []
+    all_labels = []
+
+    for i in tqdm(range(0, len(ds), batch_size), desc=f"AGNews {split}"):
+        batch = ds[i : i + batch_size]
         texts = batch["text"]
-        labels.extend(batch["label"])
+        labels = batch["label"]
 
         enc = tokenizer(
             texts,
@@ -41,42 +38,46 @@ def encode_split(dataset_name: str, split: str, tokenizer, model, batch_size: in
 
         with torch.no_grad():
             outputs = model(**enc)
-            cls = outputs.last_hidden_state[:, 0, :]
-            embs.append(cls.cpu())
+            cls_emb = outputs.last_hidden_state[:, 0, :]
 
-    return torch.cat(embs, dim=0), torch.tensor(labels, dtype=torch.long)
+        all_embs.append(cls_emb.cpu())
+        all_labels.append(torch.tensor(labels, dtype=torch.long))
+
+    embs = torch.cat(all_embs, dim=0)
+    labels = torch.cat(all_labels, dim=0)
+    return embs, labels
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", default="ag_news", help="HF dataset name")
-    parser.add_argument("--model", default="bert-base-uncased", help="HF model name")
-    parser.add_argument("--batch_size", type=int, default=64)
-    parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
-    parser.add_argument(
-        "--out_dir",
-        default=os.path.join("scripts", "agnews_emb"),
-        help="Where to store *.pt tensors",
+    out_dir = os.path.join("scripts", "agnews_emb")
+    os.makedirs(out_dir, exist_ok=True)
+
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model_name = "bert-base-uncased"
+
+    # Train split
+    train_embs, train_labels = get_agnews_embeddings(
+        model_name=model_name,
+        split="train",
+        batch_size=64,
+        device=device,
     )
-    args = parser.parse_args()
+    torch.save(train_embs, os.path.join(out_dir, "agnews_train_emb.pt"))
+    torch.save(train_labels, os.path.join(out_dir, "agnews_train_labels.pt"))
 
-    os.makedirs(args.out_dir, exist_ok=True)
+    # Test split (used as validation)
+    val_embs, val_labels = get_agnews_embeddings(
+        model_name=model_name,
+        split="test",
+        batch_size=64,
+        device=device,
+    )
+    torch.save(val_embs, os.path.join(out_dir, "agnews_val_emb.pt"))
+    torch.save(val_labels, os.path.join(out_dir, "agnews_val_labels.pt"))
 
-    tokenizer = AutoTokenizer.from_pretrained(args.model)
-    model = AutoModel.from_pretrained(args.model).to(args.device)
-    model.eval()
-
-    print(f"Encoding {args.dataset} train split ...")
-    train_emb, train_lbl = encode_split(args.dataset, "train", tokenizer, model, args.batch_size, args.device)
-    torch.save(train_emb, os.path.join(args.out_dir, "agnews_train_emb.pt"))
-    torch.save(train_lbl, os.path.join(args.out_dir, "agnews_train_labels.pt"))
-    print(f"Train tensors saved: {tuple(train_emb.shape)}, {tuple(train_lbl.shape)}")
-
-    print(f"Encoding {args.dataset} test split (used as validation) ...")
-    val_emb, val_lbl = encode_split(args.dataset, "test", tokenizer, model, args.batch_size, args.device)
-    torch.save(val_emb, os.path.join(args.out_dir, "agnews_val_emb.pt"))
-    torch.save(val_lbl, os.path.join(args.out_dir, "agnews_val_labels.pt"))
-    print(f"Val tensors saved: {tuple(val_emb.shape)}, {tuple(val_lbl.shape)}")
+    print("Done. Shapes:")
+    print("train:", train_embs.shape, train_labels.shape)
+    print("val:", val_embs.shape, val_labels.shape)
 
 
 if __name__ == "__main__":

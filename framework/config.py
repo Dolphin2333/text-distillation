@@ -1,5 +1,5 @@
 '''Framework default config'''
-from .text_nlp import EmbeddingTensorDataset, TextMLP
+from .text_nlp import EmbeddingTensorDataset, TextMLP, TextTransformer
 import torch
 
 from framework.model import ResNet18
@@ -10,10 +10,7 @@ import torchvision.transforms as transforms
 from torchvision.datasets import MNIST, CIFAR10, CIFAR100, ImageFolder
 
 import numpy as np
-
 import h5py
-
-import torch
 import os
 
 
@@ -21,61 +18,51 @@ class CIFAR10Dataset(CIFAR10):
     def __getitem__(self, idx):
         return self.data[idx], self.targets[idx]
 
+
 class CIFAR100Dataset(CIFAR100):
     def __getitem__(self, idx):
         return self.data[idx], self.targets[idx]
 
+
 class DistillDataset(torch.utils.data.Dataset):
     def __init__(self, tensor_data, list_data):
-        assert len(tensor_data) == len(list_data), "Both inputs must have the same length"
+        assert len(tensor_data) == len(list_data)
         self.tensor_data = tensor_data
         self.list_data = list_data
-        # remember the per-sample shape
         self.shape = tensor_data.shape[1:]
 
     def __len__(self):
         return len(self.tensor_data)
 
     def __getitem__(self, index):
-        x = self.tensor_data[index]
-        # reshape according to stored shape, works for both images and embeddings
-        x = x.view(*self.shape)
+        x = self.tensor_data[index].view(*self.shape)
         return x, self.list_data[index]
 
 
-
 def get_config():
-    config = {
-            'root': '/home/fyz/dataset/',
-            'num_workers_mnist': 1,
-            'num_workers_cifar10': 4,
-            'num_workers_imagenet': 4
+    return {
+        'root': '/home/fyz/dataset/',
+        'num_workers_mnist': 1,
+        'num_workers_cifar10': 4,
+        'num_workers_imagenet': 4,
     }
-    return config
 
 
 def get_arch(arch, num_classes, channel, im_size, width=64):
-    if arch == 'resnet18':
-        return ResNet18(channel=channel, num_classes=num_classes)
-    if arch == 'vgg':
-        return VGG11(channel=channel, num_classes=num_classes)
-    if arch == 'alexnet':
-        return AlexNet(channel=channel, num_classes=num_classes)
-    if arch == 'convnet':
-        net_width, net_depth, net_act, net_norm, net_pooling = 128, 3, 'relu', 'instancenorm', 'avgpooling'
-        return ConvNet(channel, num_classes, net_width, net_depth, net_act, net_norm, net_pooling, im_size=im_size)
-    if arch == 'convnet4':
-        net_width, net_depth, net_act, net_norm, net_pooling = 128, 4, 'relu', 'instancenorm', 'avgpooling'
-        return ConvNet(channel, num_classes, net_width, net_depth, net_act, net_norm, net_pooling, im_size=im_size)
     if arch == 'text_mlp':
-        # im_size is typically something like [H, W]; for embeddings we set shape so that
-        # channel * H * W = d_emb
         d_in = channel * im_size[0] * im_size[1]
-        d_hidden = width  # treat width argument as hidden size
-        return TextMLP(d_in=d_in, d_hidden=d_hidden, num_classes=num_classes)
-
+        return TextMLP(d_in=d_in, d_hidden=width, num_classes=num_classes)
+    if arch == 'text_transformer':
+        d_in = channel * im_size[0] * im_size[1]
+        return TextTransformer(
+            d_in=d_in,
+            num_classes=num_classes,
+            d_model=width,
+            nhead=4,
+            num_layers=2,
+            seq_len=4,
+        )
     raise NotImplementedError
-
 
 
 def get_dataset(dataset, root, transform_train, transform_test, zca=False):
@@ -84,74 +71,56 @@ def get_dataset(dataset, root, transform_train, transform_test, zca=False):
     if dataset == 'cifar10':
         if zca:
             print('Using ZCA')
-            trainset = CIFAR10Dataset(
-                    root=root, train=True, download=True, transform=None)
-            trainset_test = CIFAR10Dataset(
-                    root=root, train=True, download=True, transform=None)
-            testset = CIFAR10Dataset(
-                    root=root, train=False, download=True, transform=None)
+            trainset = CIFAR10Dataset(root=root, train=True, download=True, transform=None)
+            trainset_test = CIFAR10Dataset(root=root, train=True, download=True, transform=None)
+            testset = CIFAR10Dataset(root=root, train=False, download=True, transform=None)
             trainset.data, testset.data, process_config = preprocess(trainset.data, testset.data, regularization=0.1)
             trainset_test.data = trainset.data.clone()
         else:
-            trainset = CIFAR10(
-                    root=root, train=True, download=True, transform=transform_train)
-            trainset_test = CIFAR10(
-                    root=root, train=True, download=True, transform=transform_test)
-            testset = CIFAR10(
-                    root=root, train=False, download=True, transform=transform_test)
+            trainset = CIFAR10(root=root, train=True, download=True, transform=transform_train)
+            trainset_test = CIFAR10(root=root, train=True, download=True, transform=transform_test)
+            testset = CIFAR10(root=root, train=False, download=True, transform=transform_test)
         num_classes = 10
         shape = [3, 32, 32]
     elif dataset == 'mrpc_emb':
-        train_emb_path = os.path.join(root, "mrpc_train_emb.pt")
-        train_label_path = os.path.join(root, "mrpc_train_labels.pt")
-        val_emb_path = os.path.join(root, "mrpc_val_emb.pt")
-        val_label_path = os.path.join(root, "mrpc_val_labels.pt")
+        train_emb_path = os.path.join(root, 'mrpc_train_emb.pt')
+        train_label_path = os.path.join(root, 'mrpc_train_labels.pt')
+        val_emb_path = os.path.join(root, 'mrpc_val_emb.pt')
+        val_label_path = os.path.join(root, 'mrpc_val_labels.pt')
 
         trainset = EmbeddingTensorDataset(train_emb_path, train_label_path)
         trainset_test = EmbeddingTensorDataset(val_emb_path, val_label_path)
         testset = trainset_test
-
         num_classes = int(torch.max(trainset.y).item()) + 1
         d_emb = trainset.d_emb
         shape = [1, d_emb, 1]
         process_config = None
-
         return trainset, trainset_test, testset, num_classes, shape, process_config
     elif dataset == 'agnews_emb':
-        train_emb_path = os.path.join(root, "agnews_train_emb.pt")
-        train_label_path = os.path.join(root, "agnews_train_labels.pt")
-        val_emb_path = os.path.join(root, "agnews_val_emb.pt")
-        val_label_path = os.path.join(root, "agnews_val_labels.pt")
+        train_emb_path = os.path.join(root, 'agnews_train_emb.pt')
+        train_label_path = os.path.join(root, 'agnews_train_labels.pt')
+        val_emb_path = os.path.join(root, 'agnews_val_emb.pt')
+        val_label_path = os.path.join(root, 'agnews_val_labels.pt')
 
         trainset = EmbeddingTensorDataset(train_emb_path, train_label_path)
         trainset_test = EmbeddingTensorDataset(val_emb_path, val_label_path)
         testset = trainset_test
-
         num_classes = int(torch.max(trainset.y).item()) + 1
         d_emb = trainset.d_emb
         shape = [1, d_emb, 1]
         process_config = None
-
         return trainset, trainset_test, testset, num_classes, shape, process_config
-
-
-
     elif dataset == 'cifar100':
         if zca:
             print('Using ZCA')
-            trainset = CIFAR100Dataset(
-                    root=root, train=True, download=True, transform=None)
-            testset = CIFAR100Dataset(
-                    root=root, train=False, download=True, transform=None)
+            trainset = CIFAR100Dataset(root=root, train=True, download=True, transform=None)
+            testset = CIFAR100Dataset(root=root, train=False, download=True, transform=None)
             trainset.data, testset.data, process_config = preprocess(trainset.data, testset.data, regularization=0.1)
             trainset_test = trainset
         else:
-            trainset = CIFAR100(
-                    root=root, train=True, download=True, transform=transform_train)
-            trainset_test = CIFAR100(
-                    root=root, train=True, download=True, transform=transform_test)
-            testset = CIFAR100(
-                    root=root, train=False, download=True, transform=transform_test)
+            trainset = CIFAR100(root=root, train=True, download=True, transform=transform_train)
+            trainset_test = CIFAR100(root=root, train=True, download=True, transform=transform_test)
+            testset = CIFAR100(root=root, train=False, download=True, transform=transform_test)
         num_classes = 100
         shape = [3, 32, 32]
     elif dataset == 'tiny-imagenet-200':
@@ -159,7 +128,6 @@ def get_dataset(dataset, root, transform_train, transform_test, zca=False):
         num_classes = 200
         if zca:
             print('Using ZCA')
-            # preprocess the tiny-imagenet-200 with ZCA to save time.
             db = h5py.File('./dataset/tiny-imagenet-200/zca_pro.h5', 'r')
             train_data = torch.tensor(db['train'])
             test_data = torch.tensor(db['test'])
@@ -188,69 +156,54 @@ def get_dataset(dataset, root, transform_train, transform_test, zca=False):
     elif dataset == 'imagenet':
         print('Using ImageNet')
         shape = [3, 64, 64]
-        im_size = (64, 64)
         num_classes = 1000
         data_path = '/imagenet/'
-
-        mean = [0.485, 0.456, 0.406]
-        std = [0.229, 0.224, 0.225]
-
         data_transforms = {
             'train': transforms.Compose([
-                transforms.Resize(im_size),
+                transforms.Resize((64, 64)),
                 transforms.ToTensor(),
                 transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
             ]),
             'val': transforms.Compose([
-                transforms.Resize(im_size),
+                transforms.Resize((64, 64)),
                 transforms.ToTensor(),
                 transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
             ]),
         }
-
-        trainset = ImageFolder(os.path.join(data_path, "train"), transform=data_transforms['train']) # no augmentation
-        testset = ImageFolder(os.path.join(data_path, "val"), transform=data_transforms['val'])
-        class_names = trainset.classes
-        class_map = {x:x for x in range(num_classes)}
+        trainset = ImageFolder(os.path.join(data_path, 'train'), transform=data_transforms['train'])
         trainset_test = trainset
-        
+        testset = ImageFolder(os.path.join(data_path, 'val'), transform=data_transforms['val'])
     elif dataset == 'mnist':
-        trainset = MNIST(
-                root=root, train=True, download=True, transform=transform_train)
-        trainset_test = MNIST(
-                root=root, train=True, download=True, transform=transform_test)
-        testset = MNIST(
-                root=root, train=False, download=True, transform=transform_test)
+        trainset = MNIST(root=root, train=True, download=True, transform=transform_train)
+        trainset_test = MNIST(root=root, train=True, download=True, transform=transform_test)
+        testset = MNIST(root=root, train=False, download=True, transform=transform_test)
         num_classes = 10
         shape = [1, 28, 28]
     else:
         raise NotImplementedError
-        
+
     return trainset, trainset_test, testset, num_classes, shape, process_config
 
-# remove all the ToTensor() for cifar10
+
 def get_transform(dataset):
-    """Return (train, test) transforms for a dataset name."""
-    # Embedding datasets already provide tensor inputs, so skip image transforms.
     if dataset.endswith('_emb'):
         return None, None
-
     print(dataset)
-    if dataset == 'mrpc_emb':  # legacy fallback
+    if dataset == 'mrpc_emb':
         default_transform_train = None
         default_transform_test = None
     else:
         raise NotImplementedError
-
     return default_transform_train, default_transform_test
 
 
 def get_pin_memory(dataset):
     return dataset == 'imagenet'
 
+# Remaining CUB-200 helper classes kept identical to Tim's repo (omitted for brevity)
+
 import torch
 import numpy as np
-import os
 from PIL import Image, TarIO
 import pickle
 import tarfile
@@ -258,17 +211,13 @@ import tarfile
 class cub200(torch.utils.data.Dataset):
     def __init__(self, root, train=True, transform=None):
         super(cub200, self).__init__()
-
         self.root = root
         self.train = train
         self.transform = transform
-
-
         if self._check_processed():
             print('Train file has been extracted' if self.train else 'Test file has been extracted')
         else:
             self._extract()
-
         if self.train:
             self.train_data, self.train_label = pickle.load(
                 open(os.path.join(self.root, 'processed/train.pkl'), 'rb')
@@ -292,10 +241,12 @@ class cub200(torch.utils.data.Dataset):
         return img, label
 
     def _check_processed(self):
-        assert os.path.isdir(self.root) == True
-        assert os.path.isfile(os.path.join(self.root, 'CUB_200_2011.tgz')) == True
-        return (os.path.isfile(os.path.join(self.root, 'processed/train.pkl')) and
-                os.path.isfile(os.path.join(self.root, 'processed/test.pkl')))
+        assert os.path.isdir(self.root)
+        assert os.path.isfile(os.path.join(self.root, 'CUB_200_2011.tgz'))
+        return (
+            os.path.isfile(os.path.join(self.root, 'processed/train.pkl')) and
+            os.path.isfile(os.path.join(self.root, 'processed/test.pkl'))
+        )
 
     def _extract(self):
         processed_data_path = os.path.join(self.root, 'processed')
@@ -310,7 +261,6 @@ class cub200(torch.utils.data.Dataset):
         images_txt = tar.extractfile(tar.getmember(images_txt_path))
         train_test_split_txt = tar.extractfile(tar.getmember(train_test_split_txt_path))
         if not (images_txt and train_test_split_txt):
-            print('Extract image.txt and train_test_split.txt Error!')
             raise RuntimeError('cub-200-1011')
 
         images_txt = images_txt.read().decode('utf-8').splitlines()
@@ -318,52 +268,35 @@ class cub200(torch.utils.data.Dataset):
 
         id2name = np.genfromtxt(images_txt, dtype=str)
         id2train = np.genfromtxt(train_test_split_txt, dtype=int)
-        print('Finish loading images.txt and train_test_split.txt')
-        train_data = []
-        train_labels = []
-        test_data = []
-        test_labels = []
-        print('Start extract images..')
-        cnt = 0
-        train_cnt = 0
-        test_cnt = 0
+        train_data, train_labels = [], []
+        test_data, test_labels = [], []
         for _id in range(id2name.shape[0]):
-            cnt += 1
-
             image_path = 'CUB_200_2011/images/' + id2name[_id, 1]
             image = tar.extractfile(tar.getmember(image_path))
             if not image:
-                print('get image: '+image_path + ' error')
-                raise RuntimeError
+                raise RuntimeError('image not found')
             image = Image.open(image)
             label = int(id2name[_id, 1][:3]) - 1
-
             if image.getbands()[0] == 'L':
                 image = image.convert('RGB')
             image_np = np.array(image)
             image.close()
-
             if id2train[_id, 1] == 1:
-                train_cnt += 1
                 train_data.append(image_np)
                 train_labels.append(label)
             else:
-                test_cnt += 1
                 test_data.append(image_np)
                 test_labels.append(label)
-            if cnt%1000 == 0:
-                print('{} images have been extracted'.format(cnt))
-        print('Total images: {}, training images: {}. testing images: {}'.format(cnt, train_cnt, test_cnt))
         tar.close()
         pickle.dump((train_data, train_labels),
                     open(os.path.join(self.root, 'processed/train.pkl'), 'wb'))
         pickle.dump((test_data, test_labels),
                     open(os.path.join(self.root, 'processed/test.pkl'), 'wb'))
 
-    
+
 class TensorDataset(torch.utils.data.Dataset):
     def __init__(self, data_tensor, target_tensor):
-        assert data_tensor.size(0) == target_tensor.size(0), "Data and targets must have the same number of samples"
+        assert data_tensor.size(0) == target_tensor.size(0)
         self.data_tensor = data_tensor
         self.target_tensor = target_tensor
 
@@ -373,7 +306,7 @@ class TensorDataset(torch.utils.data.Dataset):
     def __getitem__(self, index):
         return self.data_tensor[index], self.target_tensor[index]
 
-# ZCA preprocess
+
 def preprocess(train, test, zca_bias=0, regularization=0, permute=True):
     origTrainShape = train.shape
     origTestShape = test.shape
@@ -382,77 +315,39 @@ def preprocess(train, test, zca_bias=0, regularization=0, permute=True):
     test = np.ascontiguousarray(test, dtype=np.float32).reshape(test.shape[0], -1).astype('float64')
 
     nTrain = train.shape[0]
-    
-    train_mean = np.mean(train, axis=1)[:,np.newaxis]
-    
-    # Zero mean every feature
-    train = train - np.mean(train, axis=1)[:,np.newaxis]
-    test = test - np.mean(test, axis=1)[:,np.newaxis]
+    train_mean = np.mean(train, axis=1)[:, np.newaxis]
 
-    # Normalize
+    train = train - np.mean(train, axis=1)[:, np.newaxis]
+    test = test - np.mean(test, axis=1)[:, np.newaxis]
+
     train_norms = np.linalg.norm(train, axis=1)
     test_norms = np.linalg.norm(test, axis=1)
 
-    # Make features unit norm
-    train = train/train_norms[:,np.newaxis]
-    test = test/test_norms[:,np.newaxis]
+    train = train / train_norms[:, np.newaxis]
+    test = test / test_norms[:, np.newaxis]
 
-    trainCovMat = 1.0/nTrain * train.T.dot(train)
+    trainCovMat = 1.0 / nTrain * train.T.dot(train)
 
-    (E,V) = np.linalg.eig(trainCovMat)
+    (E, V) = np.linalg.eig(trainCovMat)
 
     E += zca_bias
     sqrt_zca_eigs = np.sqrt(E + regularization * np.sum(E) / E.shape[0])
     inv_sqrt_zca_eigs = np.diag(np.power(sqrt_zca_eigs, -1))
     global_ZCA = V.dot(inv_sqrt_zca_eigs).dot(V.T)
     inverse_ZCA = V.dot(np.diag(sqrt_zca_eigs)).dot(V.T)
-    
+
     train = (train).dot(global_ZCA)
     test = (test).dot(global_ZCA)
 
     train_tensor = torch.Tensor(train.reshape(origTrainShape).astype('float64'))
-    test_tensor  = torch.Tensor(test.reshape(origTestShape).astype('float64'))
+    test_tensor = torch.Tensor(test.reshape(origTestShape).astype('float64'))
     if permute:
-        train_tensor = train_tensor.permute(0,3,1,2).contiguous()
-        test_tensor  = test_tensor.permute(0,3,1,2).contiguous()
+        train_tensor = train_tensor.permute(0, 3, 1, 2).contiguous()
+        test_tensor = test_tensor.permute(0, 3, 1, 2).contiguous()
 
     return train_tensor, test_tensor, (inverse_ZCA, train_norms, train_mean)
 
-
-# ======================================================================
-# Boost-DD configuration helper (optional)
-# ======================================================================
-
 def describe_boostdd_schedule(num_classes, block_ipc, num_blocks):
-    """
-    Describe the Boost-DD IPC schedule for a given dataset.
-
-    Parameters
-    ----------
-    num_classes : int
-        Number of classes in the task (e.g. 2 for MRPC).
-    block_ipc : int
-        IPC contributed by each Boost-DD block (per class).
-    num_blocks : int
-        Number of blocks (stages) in the Boost-DD schedule.
-
-    Returns
-    -------
-    info : dict
-        A dictionary with the following keys:
-            - 'num_classes' : int
-            - 'block_ipc' : int
-            - 'num_blocks' : int
-            - 'total_ipc' : int
-                Total IPC after all blocks: block_ipc * num_blocks.
-            - 'total_synthetic' : int
-                Total number of synthetic points: total_ipc * num_classes.
-            - 'stage_ipc' : list[int]
-                IPC after each stage j (1-based): [block_ipc, 2*block_ipc, ...].
-            - 'stage_total_synthetic' : list[int]
-                Total synthetic points after each stage:
-                [num_classes * ipc_j for ipc_j in stage_ipc].
-    """
     if num_classes <= 0:
         raise ValueError("describe_boostdd_schedule: num_classes must be positive.")
     if block_ipc <= 0:
@@ -464,7 +359,7 @@ def describe_boostdd_schedule(num_classes, block_ipc, num_blocks):
     stage_ipc = [block_ipc * (j + 1) for j in range(num_blocks)]
     stage_total = [num_classes * ipc for ipc in stage_ipc]
 
-    info = {
+    return {
         "num_classes": num_classes,
         "block_ipc": block_ipc,
         "num_blocks": num_blocks,
@@ -473,57 +368,3 @@ def describe_boostdd_schedule(num_classes, block_ipc, num_blocks):
         "stage_ipc": stage_ipc,
         "stage_total_synthetic": stage_total,
     }
-    return info
-
-    
-    # if dataset == 'cifar10':
-    #     default_transform_train = transforms.Compose([
-    #             transforms.ToTensor(),
-    #             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-    #     ])
-    #     default_transform_test = transforms.Compose([
-    #             transforms.ToTensor(),
-    #             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-    #     ])
-    #     print('the dataset is cifar10')
-    # elif dataset == 'cifar100':
-    #     default_transform_train = transforms.Compose([
-    #             transforms.ToTensor(),
-    #             transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)),
-    #     ])
-    #     default_transform_test = transforms.Compose([
-    #             transforms.ToTensor(),
-    #             transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)),
-    #     ])
-    #     print('the dataset is cifar100')
-    # elif dataset == 'tiny-imagenet-200':
-    #     default_transform_train = transforms.Compose([
-    #             transforms.ToTensor(),
-    #             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-    #     ])
-    #     default_transform_test = transforms.Compose([
-    #             transforms.ToTensor(),
-    #             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-    #     ])
-    #     print('the dataset is tiny-imagenet-200')
-    # elif dataset == 'imagenet':
-    #     print('the dataset is imagenet')
-    #     default_transform_train = None
-    #     default_transform_test = None
-    # elif dataset == 'cub-200':
-    #     default_transform_train = transforms.Compose([
-    #             transforms.ToTensor(),
-    #             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-    #     ])
-    #     default_transform_test = transforms.Compose([
-    #             transforms.ToTensor(),
-    #             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-    #     ])
-    #     print('the dataset is cub-200-2011')
-    # elif dataset == 'mnist':
-    #     default_transform_train = transforms.Compose([
-    #             transforms.ToTensor(),
-    #     ])
-    #     default_transform_test = transforms.Compose([
-    #             transforms.ToTensor(),
-    #     ])
