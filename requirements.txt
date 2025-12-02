@@ -11,6 +11,7 @@ numpy>=1.23
 pandas>=1.5
 h5py>=3.8
 tqdm>=4.65
+scipy>=1.9
 Pillow>=9.5
 
 # NLP + HuggingFace toolchain
