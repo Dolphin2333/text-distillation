@@ -1,6 +1,18 @@
-# AG News Text Distillation (haitong_code)
+# AG News Text Distillation 
 
-This directory packages the most stable **TextMLP + Boost-DD** workflow so you can re-use the image-based framework on the AG News text classification task. The steps mirror Tim’s Phase 0–4 pipeline.
+This directory packages the most stable **TextMLP + Boost-DD** workflow so we can re-use the image-based framework on the AG News text classification task. The steps mirror Tim’s Phase 0–4 pipeline.
+
+## Environment setup
+1. Create a fresh Conda environment (Python ≥ 3.10):
+   ```bash
+   conda create -n textdd python=3.10
+   conda activate textdd
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+   This covers PyTorch, `higher`, HuggingFace tooling, etc. When running on an HPC with special CUDA builds, swap the `torch/torchvision` wheels as required by the cluster.
 
 ## 0. Prepare sentence embeddings
 1. Install optional dependencies: `pip install datasets transformers tqdm`.
@@ -54,6 +66,7 @@ haitong_code/
 │   └── prepare_agnews_embeddings.py
 ├── eval_step4_agnews.py
 ├── eval_baseline_random_agnews.py
+├── requirements.txt
 └── README.md
 ```
 
