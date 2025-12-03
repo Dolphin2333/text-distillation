@@ -1,73 +1,41 @@
-# AG News Text Distillation 
+# AG News Distillation Pipeline (aligned with Tim's code)
 
-This directory packages the most stable **TextMLP + Boost-DD** workflow so we can re-use the image-based framework on the AG News text classification task. The steps mirror Tim’s Phase 0–4 pipeline.
+Use these sbatch wrappers to replicate Tim's MRPC experiments on a new embedding dataset (AG News). The `tim-code/` folder is a worktree checkout of the original `origin/Tim` branch; only minimal additions were made to register `agnews_emb` and provide an embedding script.
 
-## Environment setup
-1. Create a fresh Conda environment (Python ≥ 3.10):
+## Step-by-step workflow (HPC)
+
+1. **Prepare embeddings** – generates CLS tensors for both Step3 (MLP) and Step5 (Transformer).
    ```bash
-   conda create -n textdd python=3.10
-   conda activate textdd
+   sbatch sbatch/step0_prepare_embeddings.sbatch
    ```
-2. Install dependencies:
+   This runs the embedding scripts inside `tim-code/SmallD_SDD_step_3_and_4/scripts/` and `tim-code/SmallD_SDD_InProgress/scripts/`, writing `.pt` files to each directory's `scripts/agnews_emb/`.
+
+2. **Stage 0 (RaT-BPTT + TextMLP)**
    ```bash
-   pip install -r requirements.txt
+   sbatch sbatch/step1_stage0_mlp.sbatch
    ```
-   This covers PyTorch, `higher`, HuggingFace tooling, etc. When running on an HPC with special CUDA builds, swap the `torch/torchvision` wheels as required by the cluster.
+   Executes `tim-code/SmallD_SDD_step_3_and_4/main.py` with `--dataset agnews_emb`, IPC=10. Output checkpoint: `tim-code/SmallD_SDD_step_3_and_4/out_step3_agnews_mlp_ipc10_s0.h5`.
 
-## 0. Prepare sentence embeddings
-1. Install optional dependencies: `pip install datasets transformers tqdm`.
-2. Run the embedding script (defaults to `bert-base-uncased`):
+3. **Boost-DD stages (TextMLP)**
+   - Run Stage 1 only: `sbatch sbatch/step2_stage1_boost.sbatch` (IPC=15, warm-start from Stage0).
+   - Or run the entire schedule (IPC 10→35) via `sbatch sbatch/step3_full_boostdd.sbatch`. All `out_step3_agnews_*.h5` files stay under `tim-code/SmallD_SDD_step_3_and_4/`.
+
+4. **Evaluate MLP distilled sets / random baseline**
+   - Distilled-set eval: `sbatch sbatch/step4_eval_distilled.sbatch` → trains `TextMLP` students on each `out_step3_agnews_*.h5`, reports mean±std accuracy (`logs/step4_eval_syn.out`).
+   - Random baseline: `sbatch sbatch/step4_eval_baseline.sbatch` → draws real subsets with same IPC.
+
+5. **Transformer + Boost-DD (Step5)**
    ```bash
-   python scripts/prepare_agnews_embeddings.py --batch_size 64 --device cuda
+   sbatch sbatch/step5_full_transformer.sbatch
    ```
-   This produces `agnews_train_emb.pt`, `agnews_val_emb.pt`, etc. under `scripts/agnews_emb/`, which `main.py` reads automatically.
+   Runs `tim-code/SmallD_SDD_InProgress/main.py` with `--arch text_transformer` across stages IPC=5→30. Outputs stored in `tim-code/SmallD_SDD_InProgress/out_step5_agnews_tf_*.h5`.
 
-## 1–3. Text distillation with TextMLP + Boost-DD
-- Launch distillation via `main.py`; defaults already point to `agnews_emb` and `text_mlp`. Pick your IPC, filenames, and stages.
-- Example (stage 0, IPC=10):
-  ```bash
-  python main.py \
-    --dataset agnews_emb \
-    --arch text_mlp \
-    --num_per_class 10 \
-    --batch_per_class 5 \
-    --task_sampler_nc 4 \
-    --window 40 \
-    --totwindow 120 \
-    --epochs 2000 \
-    --fname agnews_mlp_ipc10_s0 \
-    --name agnews_step3_s0
-  ```
-- For subsequent Boost-DD stages append e.g. `--boost_dd --boost_init_from out_step3_agnews_ipc10_s0.h5 --boost_beta 0.3 --stage 1`, so synthetic blocks are warm-started.
-- Outputs are HDF5/PyTorch files in the working directory (`out_step3_agnews_ipc10_s1.h5`, etc.).
+6. **Evaluate Transformer distilled sets**
+   - Distilled: `sbatch sbatch/step5_eval_distill.sbatch` (calls `eval_step5_distill.py`, prints tables under `logs/step5_eval_distill.out`).
+   - Random baseline: `sbatch sbatch/step5_eval_baseline.sbatch`.
 
-## 4. Evaluate distilled sets
-- **Distilled-set training:**  
-  ```bash
-  python eval_step4_agnews.py --data_root scripts/agnews_emb --paths out_step3_agnews_ipc10_s1.h5
-  ```
-  You can pass multiple `--paths`; each one trains `TextMLP` with 5 seeds and reports mean/std accuracy.
-- **Random-subset baseline:**  
-  ```bash
-  python eval_baseline_random_agnews.py \
-      --data_root scripts/agnews_emb \
-      --ipcs 5 10 15 20 \
-      --seeds 0 1 2 3 4
-  ```
-  This samples real data with the same IPC budget to compare against the distilled sets.
-
-## Layout
-```
-haitong_code/
-├── main.py
-├── framework/
-│   └── ... (base.py, config.py, text_nlp.py, etc.)
-├── scripts/
-│   └── prepare_agnews_embeddings.py
-├── eval_step4_agnews.py
-├── eval_baseline_random_agnews.py
-├── requirements.txt
-└── README.md
-```
-
-`framework/config.py` already includes the `agnews_emb` entry while keeping `mrpc_emb` support. To add another dataset, replicate the embedding script and config branch with new filenames.
+## Notes
+- All sbatch scripts assume the repo lives at `/scratch/hz3916/Data_Distillation/text-distillation`; adjust `WORKDIR` if different.
+- Tim's MLP/Transformer code remains unchanged except for dataset registration. You can still run MRPC by pointing `--dataset mrpc_emb` and using the original `.pt` files.
+- Evaluation scripts now accept `--data_root/--train_emb/...` so you can switch between MRPC and AG News via CLI.
+- Distilled checkpoints and logs are inside `tim-code/SmallD_SDD_*` directories (not the repo root). Keep this in mind when collecting results.

@@ -10,10 +10,14 @@
 source ~/.bashrc
 conda activate textdd
 
-WORKDIR=/scratch/hz3916/Data_Distillation/text-distillation
+WORKDIR=/scratch/hz3916/Data_Distillation/text-distillation/tim-code/SmallD_SDD_step_3_and_4
 cd "$WORKDIR"
 
-python eval_baseline_random_agnews.py \
+python eval_baseline_random_mrpc.py \
   --data_root scripts/agnews_emb \
+  --train_emb agnews_train_emb.pt \
+  --train_labels agnews_train_labels.pt \
+  --val_emb agnews_val_emb.pt \
+  --val_labels agnews_val_labels.pt \
   --ipcs 5 10 15 20 \
   --seeds 0 1 2 3 4
