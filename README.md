@@ -1,41 +1,64 @@
-# AG News Distillation Pipeline (aligned with Tim's code)
+# EMBARRASSINGLY SIMPLE DATASET DISTILLATION FOR NATURAL LANGUAGE PROCESSING
 
-Use these sbatch wrappers to replicate Tim's MRPC experiments on a new embedding dataset (AG News). The `tim-code/` folder is a worktree checkout of the original `origin/Tim` branch; only minimal additions were made to register `agnews_emb` and provide an embedding script.
+## Project Overview
+This repository accompanies the NYU CDS project **“Embarrassingly Simple Dataset Distillation for Natural Language Processing”**. Building on the RaT‑BPTT and Boost‑DD strategies from the CV literature, we distill small sets of *continuous CLS embeddings* that allow lightweight student models (Text MLP or Transformer) to match or outperform randomly sampled real subsets on MRPC and AG News.
 
-## Step-by-step workflow (HPC)
+Key ideas:
+- Distillation is formulated as a bilevel problem. The inner loop trains a student model on synthetic embeddings, while the outer loop updates the embeddings via (RaT-)BPTT.
+- RaT‑BPTT stabilizes gradients by randomly truncating long unrolls, keeping runtime manageable even for Transformer students.
+- Boost-DD warm-starts higher IPC stages with previously distilled checkpoints, yielding more stable solutions for large synthetic budgets.
+- All experiments run entirely in embedding space using frozen sentence encoders, which makes the approach “embarrassingly simple” to deploy for new NLP datasets.
 
-1. **Prepare embeddings** – generates CLS tensors for both Step3 (MLP) and Step5 (Transformer).
-   ```bash
-   sbatch sbatch/step0_prepare_embeddings.sbatch
-   ```
-   This runs the embedding scripts inside `tim-code/SmallD_SDD_step_3_and_4/scripts/` and `tim-code/SmallD_SDD_InProgress/scripts/`, writing `.pt` files to each directory's `scripts/agnews_emb/`.
+## Tutorial & Repository Structure
 
-2. **Stage 0 (RaT-BPTT + TextMLP)**
-   ```bash
-   sbatch sbatch/step1_stage0_mlp.sbatch
-   ```
-   Executes `tim-code/SmallD_SDD_step_3_and_4/main.py` with `--dataset agnews_emb`, IPC=10. Output checkpoint: `tim-code/SmallD_SDD_step_3_and_4/out_step3_agnews_mlp_ipc10_s0.h5`.
+```
+text-distillation/
+├── main.py                     # Unified training entry point (MLP or Transformer students)
+├── framework/                  # Core distillation components (datasets, optimizers, utilities)
+├── scripts/agnews_emb/         # Frozen CLS embeddings for AG News (generated via step0)
+├── sbatch/                     # SLURM batch scripts for every experiment stage
+├── eval_*.py                   # Evaluation utilities for distilled vs. random baselines
+├── train_real_baseline.py      # Optional real-data baseline training script
+├── logs/                       # Saved stdout/stderr for every sbatch job
+└── analysis/                   # Generated plots, tables, and summaries
+```
 
-3. **Boost-DD stages (TextMLP)**
-   - Run Stage 1 only: `sbatch sbatch/step2_stage1_boost.sbatch` (IPC=15, warm-start from Stage0).
-   - Or run the entire schedule (IPC 10→35) via `sbatch sbatch/step3_full_boostdd.sbatch`. All `out_step3_agnews_*.h5` files stay under `tim-code/SmallD_SDD_step_3_and_4/`.
+### Core Code Components
+- **`main.py`** – Parses CLI flags and launches dataset distillation (supports RaT-BPTT, Full-BPTT, Boost-DD warm starts).
+- **`framework/`**
+  - `base.py` – Bilevel training loop, evaluation routines, checkpointing.
+  - `config.py` – Model/dataset configs and scheduling utilities.
+  - `util.py` – Augmentation helpers, projection utilities, Boost-DD helpers.
+- **Evaluation scripts**
+  - `eval_step5_distill.py` – Re-trains student models on `.h5` distilled sets and reports mean ± std accuracy across seeds.
+  - `eval_step5_train.py` / `eval_step5_baseline_random_agnews.py` – Support scripts for random baseline comparisons.
+- **Embedding scripts** (`sbatch/step0_prepare_embeddings.sbatch`) – Generates CLS tensors for new datasets via frozen encoders.
 
-4. **Evaluate MLP distilled sets / random baseline**
-   - Distilled-set eval: `sbatch sbatch/step4_eval_distilled.sbatch` → trains `TextMLP` students on each `out_step3_agnews_*.h5`, reports mean±std accuracy (`logs/step4_eval_syn.out`).
-   - Random baseline: `sbatch sbatch/step4_eval_baseline.sbatch` → draws real subsets with same IPC.
+### Running the Pipeline (HPC Workflow)
+1. **Prepare embeddings**  
+   `sbatch sbatch/step0_prepare_embeddings.sbatch`
+2. **Text MLP RaT-BPTT & Boost-DD stages**  
+   `sbatch sbatch/mlp_ratbptt_ipc1_10_50.sbatch`, `sbatch sbatch/mlp_ratbptt_ipc5_20.sbatch`, etc.
+3. **Text MLP Full-BPTT stages**  
+   `sbatch sbatch/mlp_fullbptt_ipc1_10_50.sbatch`, `sbatch sbatch/mlp_fullbptt_ipc5_20.sbatch`.
+4. **Transformer Full-BPTT or RaT-BPTT**  
+   `sbatch sbatch/tf_fullbptt_ipc1_5_10_20_50.sbatch`, `sbatch/tf_ratbptt_ipc1_5_10_20_50.sbatch`, plus extended-epoch variants.
+5. **Evaluation**  
+   `sbatch sbatch/eval_tf_fullbptt_ipc1_5_10_20_50.sbatch`, `sbatch/sbatch/eval_mlp_*`, or `python eval_step5_distill.py ...`.
 
-5. **Transformer + Boost-DD (Step5)**
-   ```bash
-   sbatch sbatch/step5_full_transformer.sbatch
-   ```
-   Runs `tim-code/SmallD_SDD_InProgress/main.py` with `--arch text_transformer` across stages IPC=5→30. Outputs stored in `tim-code/SmallD_SDD_InProgress/out_step5_agnews_tf_*.h5`.
+Each SLURM script writes `.out/.err` logs under `logs/`, and distilled checkpoints (`*.h5`, `*.pth`) reside in `./checkpoints/`.
 
-6. **Evaluate Transformer distilled sets**
-   - Distilled: `sbatch sbatch/step5_eval_distill.sbatch` (calls `eval_step5_distill.py`, prints tables under `logs/step5_eval_distill.out`).
-   - Random baseline: `sbatch sbatch/step5_eval_baseline.sbatch`.
+## References
+The project draws on the literature cited in the accompanying report “Small_data_Project (6).pdf”:
 
-## Notes
-- All sbatch scripts assume the repo lives at `/scratch/hz3916/Data_Distillation/text-distillation`; adjust `WORKDIR` if different.
-- Tim's MLP/Transformer code remains unchanged except for dataset registration. You can still run MRPC by pointing `--dataset mrpc_emb` and using the original `.pt` files.
-- Evaluation scripts now accept `--data_root/--train_emb/...` so you can switch between MRPC and AG News via CLI.
-- Distilled checkpoints and logs are inside `tim-code/SmallD_SDD_*` directories (not the repo root). Keep this in mind when collecting results.
+1. Brown, T. B., Mann, B., Ryder, N., *et al.* (2020). **Language Models are Few-Shot Learners.** *NeurIPS.*
+2. Carlini, N., Tramer, F., Wallace, E., *et al.* (2021). **Extracting Training Data from Large Language Models.** *USENIX Security Symposium.*
+3. Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2019). **BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding.** *NAACL.*
+4. Feng, W., Huang, Y., Liu, Y., Zhang, Z., Li, Y., & Wang, L. (2023). **Embarrassingly Simple Dataset Distillation.** *ICLR.*
+5. Maekawa, T., Tanaka, S., & Okazaki, N. (2023). **Dataset Distillation with Attention Labels for Fine-Tuning BERT.** *Findings of ACL.*
+6. Schick, T., & Schütze, H. (2020). **It’s Not Just Size That Matters: Small Language Models are also Few-Shot Learners.** *NAACL.*
+7. Wang, T., Zhu, J.-Y., Torralba, A., & Efros, A. A. (2018). **Dataset Distillation.** *CVPR.*
+8. Williams, R. J., & Peng, J. (1990). **An Efficient Gradient-Based Algorithm for On-line Training of Recurrent Network Trajectories.** *Neural Computation.*
+
+---
+For full experimental details, plots, and scripted commands, refer to the `analysis/` artifacts and the PDF report included in this repository.
