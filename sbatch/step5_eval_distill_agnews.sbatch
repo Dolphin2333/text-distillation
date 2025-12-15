@@ -1,5 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=agnews_step5_eval
+#SBATCH --account=ds_ga_3001_003-2025fa
+#SBATCH --partition=c12m85-a100-1   
 #SBATCH --gres=gpu:a100:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G

@@ -1,14 +1,16 @@
 #!/bin/bash
 #SBATCH --job-name=agnews_step5_tf
-#SBATCH --gres=gpu:a100:1
-#SBATCH --cpus-per-task=4
+#SBATCH --account=ds_ga_3001_003-2025fa
+#SBATCH --partition=c12m85-a100-1   
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
-#SBATCH --time=10:00:00
+#SBATCH --time=3:00:00
 #SBATCH --output=logs/step5_full_tf.out
 #SBATCH --error=logs/step5_full_tf.err
 
-source ~/.bashrc
-conda activate textdd
+source /scratch/hz3916/miniconda3/etc/profile.d/conda.sh
+conda activate /scratch/hz3916/miniconda3/envs/textdd
 
 WORKDIR=/scratch/hz3916/Data_Distillation/text-distillation
 cd "$WORKDIR"
@@ -17,7 +19,7 @@ mkdir -p logs/step5_full_tf
 
 COMMON_FLAGS="--root ./scripts --dataset agnews_emb --arch text_transformer \
   --width 256 --inner_optim Adam --inner_lr 0.001 --outer_optim Adam --lr 0.001 \
-  --task_sampler_nc 4 --window 20 --totwindow 20 --batch_size 200 --epochs 100 --seed 0"
+  --task_sampler_nc 4 --window 20 --totwindow 20 --batch_size 2048 --epochs 100 --seed 0"
 
 run_stage() {
   local ipc=$1

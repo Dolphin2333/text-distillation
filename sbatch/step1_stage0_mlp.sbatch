@@ -7,7 +7,7 @@
 #SBATCH --output=logs/step1_stage0.out
 #SBATCH --error=logs/step1_stage0.err
 
-source ~/.bashrc
+source /scratch/hz3916/.bashrc
 conda activate textdd
 
 WORKDIR=/scratch/hz3916/Data_Distillation/text-distillation/tim-code/SmallD_SDD_step_3_and_4

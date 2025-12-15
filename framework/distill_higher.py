@@ -27,13 +27,16 @@ class Distill(nn.Module):
                  num_classes=2, task_sampler_nc=2, train_y=False,
                  channel=3, im_size=(32, 32), inner_optim='SGD',
                  syn_intervention=None, real_intervention=None, cctype=0,
-                 old_per_class=0, beta=1.0):
+                 old_per_class=0, beta=1.0, width=64,
+                 total_window=None, min_window=0):
         super(Distill, self).__init__()
 
         # Basic config
         self.arch = arch
         self.lr = lr
         self.window = window
+        self.total_window = max(window, total_window if total_window is not None else window)
+        self.min_window = max(0, min(min_window, self.total_window - self.window))
         self.num_train_eval = num_train_eval
         self.num_classes = num_classes
         self.channel = channel
@@ -41,6 +44,7 @@ class Distill(nn.Module):
         self.batch_pc = batch_pc
         self.img_pc = img_pc
         self.task_sampler_nc = task_sampler_nc
+        self.width = width
         self.train_y = train_y
         self.inner_optim = inner_optim
         self.syn_intervention = syn_intervention
@@ -64,7 +68,7 @@ class Distill(nn.Module):
             self.label = y_init
 
         # Student network architecture
-        self.net = get_arch(arch, self.num_classes, self.channel, self.im_size)
+        self.net = get_arch(arch, self.num_classes, self.channel, self.im_size, width=self.width)
 
         # Boost-DD specific attributes
         # First old_prefix_size synthetic samples belong to previous blocks
@@ -137,7 +141,7 @@ class Distill(nn.Module):
 
     def forward(self, x):
         # Re-initialize the net for inner-loop training
-        self.net = get_arch(self.arch, self.num_classes, self.channel, self.im_size).cuda()
+        self.net = get_arch(self.arch, self.num_classes, self.channel, self.im_size, width=self.width).cuda()
         self.net.train()
     
         if self.inner_optim == 'SGD':
@@ -160,17 +164,34 @@ class Distill(nn.Module):
                 loss.backward()
                 self.optimizer.step()
     
-        # Higher unroll
+        # Determine RaT-BPTT window placement
+        total_steps = max(self.total_window, self.window)
+        effective_window = min(self.window, total_steps)
+        max_start = max(0, total_steps - effective_window)
+        min_start = min(self.min_window, max_start)
+        if max_start == min_start:
+            start_step = min_start
+        else:
+            start_step = random.randint(min_start, max_start)
+        end_step = start_step + effective_window
+        self.last_window = (start_step, end_step)
+
+        # Higher unroll with random truncated window
         with higher.innerloop_ctx(
                 self.net, self.optimizer, copy_initial_weights=True
             ) as (fnet, diffopt):
-            for i in range(self.window):
+            for i in range(total_steps):
                 imgs, label = self.subsample()
+                track_meta = start_step <= i < end_step
+                if not track_meta:
+                    imgs = imgs.detach()
+                    if self.train_y and isinstance(label, torch.Tensor):
+                        label = label.detach()
                 imgs = self.syn_intervention(imgs, dtype='syn', seed=random.randint(0, 10000))
                 logits = self._forward_net(fnet, imgs)
                 loss = self.criterion(logits, label)
                 diffopt.step(loss)
-    
+
             x = self.real_intervention(x, dtype='real', seed=random.randint(0, 10000))
             logits_x = self._forward_net(fnet, x)
             # IMPORTANT: return a 2-tuple so `output, _ = model(inputs)` still works
@@ -179,7 +200,7 @@ class Distill(nn.Module):
     
     def init_train(self, epoch, init=False, lim=True):
         if init:
-            self.net = get_arch(self.arch, self.num_classes, self.channel, self.im_size).cuda()
+            self.net = get_arch(self.arch, self.num_classes, self.channel, self.im_size, width=self.width).cuda()
     
             if self.inner_optim == 'SGD':
                 self.optimizer = optim.SGD(self.net.parameters(), lr=self.lr, momentum=0.9, weight_decay=5e-4)

@@ -1,0 +1,113 @@
+
+======== STEP 4: FINAL EVALUATION ========
+
+--- Evaluating agnews_mlp_fullbptt_ipc01_s0.h5 ---
+  seed=0: acc=0.8949
+  seed=1: acc=0.8880
+  seed=2: acc=0.8928
+  seed=3: acc=0.8916
+  seed=4: acc=0.8946
+  --> MEAN=0.8924  STD=0.0025
+
+--- Evaluating agnews_mlp_fullbptt_ipc10_s1.h5 ---
+  seed=0: acc=0.8947
+  seed=1: acc=0.8950
+  seed=2: acc=0.8895
+  seed=3: acc=0.8972
+  seed=4: acc=0.8987
+  --> MEAN=0.8950  STD=0.0031
+
+--- Evaluating agnews_mlp_fullbptt_ipc50_s2.h5 ---
+  seed=0: acc=0.8933
+  seed=1: acc=0.8970
+  seed=2: acc=0.8959
+  seed=3: acc=0.8982
+  seed=4: acc=0.8961
+  --> MEAN=0.8961  STD=0.0016
+
+--- Evaluating agnews_mlp_ratbptt_ipc01_s0.h5 ---
+  seed=0: acc=0.8807
+  seed=1: acc=0.8921
+  seed=2: acc=0.8807
+  seed=3: acc=0.8907
+  seed=4: acc=0.8867
+  --> MEAN=0.8862  STD=0.0048
+
+--- Evaluating agnews_mlp_ratbptt_ipc10_s1.h5 ---
+  seed=0: acc=0.8966
+  seed=1: acc=0.8868
+  seed=2: acc=0.9017
+  seed=3: acc=0.8943
+  seed=4: acc=0.8999
+  --> MEAN=0.8959  STD=0.0052
+
+--- Evaluating agnews_mlp_ratbptt_ipc50_s2.h5 ---
+  seed=0: acc=0.8837
+  seed=1: acc=0.8899
+  seed=2: acc=0.8957
+  seed=3: acc=0.8704
+  seed=4: acc=0.8930
+  --> MEAN=0.8865  STD=0.0090
+
+--- Evaluating agnews_mlp_ratbptt_boost_ipc01_s0.h5 ---
+  seed=0: acc=0.8916
+  seed=1: acc=0.8849
+  seed=2: acc=0.8911
+  seed=3: acc=0.8942
+  seed=4: acc=0.8950
+  --> MEAN=0.8913  STD=0.0036
+
+--- Evaluating agnews_mlp_ratbptt_boost_ipc05_s1.h5 ---
+  seed=0: acc=0.8900
+  seed=1: acc=0.8903
+  seed=2: acc=0.8967
+  seed=3: acc=0.9004
+  seed=4: acc=0.8993
+  --> MEAN=0.8953  STD=0.0044
+
+--- Evaluating agnews_mlp_ratbptt_boost_ipc10_s2.h5 ---
+  seed=0: acc=0.8808
+  seed=1: acc=0.8918
+  seed=2: acc=0.8817
+  seed=3: acc=0.8937
+  seed=4: acc=0.8876
+  --> MEAN=0.8871  STD=0.0052
+
+--- Evaluating agnews_mlp_ratbptt_boost_ipc15_s3.h5 ---
+  seed=0: acc=0.8950
+  seed=1: acc=0.9012
+  seed=2: acc=0.8971
+  seed=3: acc=0.9007
+  seed=4: acc=0.8974
+  --> MEAN=0.8983  STD=0.0023
+
+--- Evaluating agnews_mlp_ratbptt_boost_ipc20_s4.h5 ---
+  seed=0: acc=0.8886
+  seed=1: acc=0.8979
+  seed=2: acc=0.8963
+  seed=3: acc=0.8958
+  seed=4: acc=0.8879
+  --> MEAN=0.8933  STD=0.0042
+
+--- Evaluating agnews_mlp_ratbptt_boost_ipc50_s5.h5 ---
+  seed=0: acc=0.8763
+  seed=1: acc=0.8911
+  seed=2: acc=0.8914
+  seed=3: acc=0.8903
+  seed=4: acc=0.8901
+  --> MEAN=0.8878  STD=0.0058
+
+========== FINAL SUMMARY ==========
+agnews_mlp_fullbptt_ipc01_s0.h5       mean=0.8924   std=0.0025
+agnews_mlp_fullbptt_ipc10_s1.h5       mean=0.8950   std=0.0031
+agnews_mlp_fullbptt_ipc50_s2.h5       mean=0.8961   std=0.0016
+agnews_mlp_ratbptt_ipc01_s0.h5        mean=0.8862   std=0.0048
+agnews_mlp_ratbptt_ipc10_s1.h5        mean=0.8959   std=0.0052
+agnews_mlp_ratbptt_ipc50_s2.h5        mean=0.8865   std=0.0090
+agnews_mlp_ratbptt_boost_ipc01_s0.h5   mean=0.8913   std=0.0036
+agnews_mlp_ratbptt_boost_ipc05_s1.h5   mean=0.8953   std=0.0044
+agnews_mlp_ratbptt_boost_ipc10_s2.h5   mean=0.8871   std=0.0052
+agnews_mlp_ratbptt_boost_ipc15_s3.h5   mean=0.8983   std=0.0023
+agnews_mlp_ratbptt_boost_ipc20_s4.h5   mean=0.8933   std=0.0042
+agnews_mlp_ratbptt_boost_ipc50_s5.h5   mean=0.8878   std=0.0058
+===================================

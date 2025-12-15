@@ -1,17 +1,19 @@
 #!/bin/bash
-#SBATCH --job-name=agnews_stage1
+#SBATCH --job-name=step2_stage1_boost_agnews
+#SBATCH --account=ds_ga_3001_003-2025fa
+#SBATCH --partition=c12m85-a100-1   
 #SBATCH --gres=gpu:a100:1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
-#SBATCH --time=03:00:00
+#SBATCH --time=02:00:00
 #SBATCH --output=logs/step2_stage1.out
 #SBATCH --error=logs/step2_stage1.err
 
-source ~/.bashrc
-conda activate textdd
+source /scratch/hz3916/miniconda3/etc/profile.d/conda.sh
+conda activate /scratch/hz3916/miniconda3/envs/textdd
 
-WORKDIR=/scratch/hz3916/Data_Distillation/text-distillation/tim-code/SmallD_SDD_step_3_and_4
-cd "$WORKDIR"
+WORKDIR=/scratch/hz3916/Data_Distillation/text-distillation
+cd $WORKDIR
 
 python main.py \
   --root ./scripts \
@@ -22,8 +24,8 @@ python main.py \
   --task_sampler_nc 4 \
   --window 40 \
   --totwindow 120 \
-  --epochs 2000 \
-  --batch_size 200 \
+  --epochs 30 \
+  --batch_size 2048 \
   --fname agnews_mlp_ipc15_s1 \
   --name agnews_step3_s1 \
   --boost_dd \

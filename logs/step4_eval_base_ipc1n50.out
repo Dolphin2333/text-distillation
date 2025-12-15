@@ -1,0 +1,20 @@
+
+===== RANDOM REAL-SUBSET BASELINE (AG NEWS) =====
+IPCs: [1, 50]
+Seeds: [0, 1, 2, 3, 4]
+
+--- IPC = 1 ---
+  seed=0: acc=0.4200
+  seed=1: acc=0.3717
+  seed=2: acc=0.3779
+  seed=3: acc=0.3728
+  seed=4: acc=0.4095
+  -> MEAN=0.3904  STD=0.0203
+
+--- IPC = 50 ---
+  seed=0: acc=0.8168
+  seed=1: acc=0.7934
+  seed=2: acc=0.8182
+  seed=3: acc=0.8129
+  seed=4: acc=0.8226
+  -> MEAN=0.8128  STD=0.0102

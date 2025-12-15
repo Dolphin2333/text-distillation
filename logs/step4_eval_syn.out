@@ -1,0 +1,23 @@
+
+======== STEP 4: FINAL EVALUATION ========
+
+--- Evaluating out_step3_agnews_mlp_ipc10_s0.h5 ---
+  seed=0: acc=0.8289
+  seed=1: acc=0.8046
+  seed=2: acc=0.8239
+  seed=3: acc=0.8292
+  seed=4: acc=0.8162
+  --> MEAN=0.8206  STD=0.0093
+
+--- Evaluating out_step3_agnews_mlp_ipc15_s1.h5 ---
+  seed=0: acc=0.8529
+  seed=1: acc=0.8397
+  seed=2: acc=0.8517
+  seed=3: acc=0.8568
+  seed=4: acc=0.8405
+  --> MEAN=0.8483  STD=0.0069
+
+========== FINAL SUMMARY ==========
+out_step3_agnews_mlp_ipc10_s0.h5      mean=0.8206   std=0.0093
+out_step3_agnews_mlp_ipc15_s1.h5      mean=0.8483   std=0.0069
+===================================

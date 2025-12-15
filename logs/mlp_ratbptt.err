@@ -1,0 +1,2 @@
+/opt/slurm/data/slurmd/job129952/slurm_script: line 47: syntax error near unexpected token `('
+/opt/slurm/data/slurmd/job129952/slurm_script: line 47: `echo \"RaT-BPTT (window 40 / total 100) MLP runs submitted (IPC 1/10/50).\"'

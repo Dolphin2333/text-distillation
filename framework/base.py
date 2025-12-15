@@ -223,6 +223,9 @@ def main_worker(gpu, ngpus_per_node, args):
         cctype=args.cctype,
         old_per_class=getattr(args, 'old_per_class', 0),
         beta=getattr(args, 'boost_beta', 1.0),
+        width=args.width,
+        total_window=args.totwindow,
+        min_window=args.minwindow,
     )
 
     print(model.net)
@@ -339,9 +342,12 @@ def main_worker(gpu, ngpus_per_node, args):
     
     # if args.ddtype == 'standard':
     #     fname = './grad_save_init_IPC_'+str(args.num_per_class)+'_no_curr_unroll_'+str(args.window)+args.fname+'.h5'
+    if hasattr(args, 'out_dir'):
+        os.makedirs(args.out_dir, exist_ok=True)
+
     if args.ddtype == 'standard':
         # fname = f'./out_step2_{args.dataset}_{args.arch}_ipc{args.num_per_class:02d}_s{args.stage}.h5'
-        fname = f'./out_step3_{args.fname}.h5'
+        fname = os.path.join(args.out_dir, f'{args.fname}.h5')
 
     else:
         fname = './save/{}/IPC_{}_{}_curr_unroll_{}_{}_{}_{}.h5'.format(str(args.dataset), str(args.num_per_class),
@@ -444,11 +450,12 @@ def main_worker(gpu, ngpus_per_node, args):
 def train(train_loader, model, criterion, optimizer, epoch, device, distill_steps, args):
     batch_time = AverageMeter('Time', ':6.3f')
     data_time = AverageMeter('Data', ':6.3f')
+    inner_time = AverageMeter('InnerLoop', ':6.3f')
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     progress = ProgressMeter(
         len(train_loader),
-        [batch_time, data_time, losses, top1],
+        [batch_time, data_time, inner_time, losses, top1],
         prefix="Epoch: [{}]".format(epoch))
 
     # switch to train mode
@@ -494,7 +501,9 @@ def train(train_loader, model, criterion, optimizer, epoch, device, distill_step
         i, (inputs, targets) = train1
         inputs = inputs.to(device, non_blocking=True)
         targets = targets.to(device, non_blocking=True)
+        inner_start = time.time()
         output, _ = model(inputs)
+        inner_time.update(time.time() - inner_start)
 
         loss = criterion(output, targets)
 
@@ -690,7 +699,7 @@ def project(data, pgd_coef=1):
     return data / data_norm * pgd_coef
 
 def test(data_loaders, model, criterion, args):
-    epoch_list = [300, 600, 1000, 3000]
+    epoch_list = [300, 600, 1000]
     acc = []
     for i in range(len(data_loaders)): acc.append([0] * (len(epoch_list)))
     loss = 0
@@ -774,5 +783,3 @@ def default_test(val_loader, model, criterion, args):
     if model.module.data.weight.get_device() == 0: progress.display_summary()
 
     return top1.avg, losses.avg 
-
-

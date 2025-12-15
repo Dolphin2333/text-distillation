@@ -7,6 +7,7 @@ import torch
 import torch.multiprocessing as mp
 
 import wandb
+from torch.nn.attention import sdpa_kernel, SDPBackend
 
 from framework.base import main_worker
 from framework.config import get_arch
@@ -32,6 +33,7 @@ if __name__ == '__main__':
     parser.add_argument('--root', default='./scripts', type=str, help='Root directory for dataset')
     parser.add_argument('--dataset', default='agnews_emb', type=str, help='Dataset to use')
     parser.add_argument('--arch', default='text_mlp', type=str, help='Architecture to use')
+    parser.add_argument('--width', default=256, type=int, help='Hidden size / transformer width')
     parser.add_argument('--lr', default=0.001, type=float, help='learning rate for the distilled data')
     parser.add_argument('--inner_optim', default='Adam', type=str, help='Inner optimizer for the neural network')
     parser.add_argument('--outer_optim', default='Adam', type=str, help='Outer optimizer for the data')
@@ -63,6 +65,7 @@ if __name__ == '__main__':
     parser.add_argument('--clip_coef', default=0.9, type=float, help='Clipping coefficient for the gradients in EMA')
 
     parser.add_argument('--fname', default='agnews_mlp_ipc10', type=str, help='Filename for storing checkpoints')
+    parser.add_argument('--out_dir', default='./checkpoints', type=str, help='Directory to store checkpoint files')
     parser.add_argument('--name', default='agnews_step', type=str, help='name of the experiment for wandb')
     parser.add_argument('--comp_aug', action='store_true', help='Compose different augmentation methods, if not, use only one randomly')
     parser.add_argument('--comp_aug_real', action='store_true', help='Compose different augmentation methods for the real data')
@@ -108,15 +111,16 @@ if __name__ == '__main__':
         
     args.num_train_eval = int(args.num_train_eval / ngpus_per_node)   
     
-    if args.mp_distributed:
-        args.world_size = ngpus_per_node * args.world_size
-        mp.spawn(main_worker, nprocs=ngpus_per_node, args=(ngpus_per_node, args))
+    with sdpa_kernel(SDPBackend.MATH):
+        if args.mp_distributed:
+            args.world_size = ngpus_per_node * args.world_size
+            mp.spawn(main_worker, nprocs=ngpus_per_node, args=(ngpus_per_node, args))
 
-        for i in range(5):
-            torch.cuda.empty_cache()
-    else:
-        # Simply call main_worker function
-        main_worker(args.gpu, ngpus_per_node, args)
+            for i in range(5):
+                torch.cuda.empty_cache()
+        else:
+            # Simply call main_worker function
+            main_worker(args.gpu, ngpus_per_node, args)
 
 # Sample command
 """
@@ -141,6 +145,7 @@ python main.py \
   --lr 0.001 \
   --syn_strategy none \
   --real_strategy none \
+  --out_dir ./checkpoints \
   --fname mrpc_mlp_ipc10 \
   --name mrpc_step1 \
   --seed 0

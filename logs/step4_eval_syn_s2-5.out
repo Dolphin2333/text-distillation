@@ -1,0 +1,41 @@
+
+======== STEP 4: FINAL EVALUATION ========
+
+--- Evaluating out_step3_agnews_mlp_ipc20_s2.h5 ---
+  seed=0: acc=0.8347
+  seed=1: acc=0.8162
+  seed=2: acc=0.8359
+  seed=3: acc=0.8408
+  seed=4: acc=0.8216
+  --> MEAN=0.8298  STD=0.0093
+
+--- Evaluating out_step3_agnews_mlp_ipc25_s3.h5 ---
+  seed=0: acc=0.8771
+  seed=1: acc=0.8686
+  seed=2: acc=0.8739
+  seed=3: acc=0.8770
+  seed=4: acc=0.8688
+  --> MEAN=0.8731  STD=0.0038
+
+--- Evaluating out_step3_agnews_mlp_ipc30_s4.h5 ---
+  seed=0: acc=0.8807
+  seed=1: acc=0.8739
+  seed=2: acc=0.8814
+  seed=3: acc=0.8824
+  seed=4: acc=0.8770
+  --> MEAN=0.8791  STD=0.0032
+
+--- Evaluating out_step3_agnews_mlp_ipc35_s5.h5 ---
+  seed=0: acc=0.8795
+  seed=1: acc=0.8717
+  seed=2: acc=0.8782
+  seed=3: acc=0.8820
+  seed=4: acc=0.8755
+  --> MEAN=0.8774  STD=0.0035
+
+========== FINAL SUMMARY ==========
+out_step3_agnews_mlp_ipc20_s2.h5      mean=0.8298   std=0.0093
+out_step3_agnews_mlp_ipc25_s3.h5      mean=0.8731   std=0.0038
+out_step3_agnews_mlp_ipc30_s4.h5      mean=0.8791   std=0.0032
+out_step3_agnews_mlp_ipc35_s5.h5      mean=0.8774   std=0.0035
+===================================

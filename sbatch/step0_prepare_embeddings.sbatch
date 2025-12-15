@@ -7,7 +7,7 @@
 #SBATCH --output=logs/step0_embed.out
 #SBATCH --error=logs/step0_embed.err
 
-source ~/.bashrc
+source /scratch/hz3916/.bashrc
 conda activate textdd
 
 WORKDIR=/scratch/hz3916/Data_Distillation/text-distillation

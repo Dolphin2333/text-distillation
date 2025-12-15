@@ -1,0 +1,67 @@
+Using device: cuda
+Validation set: x_val=(7600, 768), y_val=(7600,)
+Found 6 synthetic files.
+
+=== Evaluating file: checkpoints/out_tf_fullbptt_ipc50_s4_boost_ep600.h5 (ipc=50, stage=4) ===
+  seed=0 ...
+    -> acc=0.4883
+  seed=1 ...
+    -> acc=0.5317
+  seed=2 ...
+    -> acc=0.6550
+  [SUMMARY] mean=0.5583  std=0.0706
+
+=== Evaluating file: checkpoints/out_tf_ratbptt_ipc01_s0_ep200.h5 (ipc=1, stage=0) ===
+  seed=0 ...
+    -> acc=0.6842
+  seed=1 ...
+    -> acc=0.6736
+  seed=2 ...
+    -> acc=0.6908
+  [SUMMARY] mean=0.6829  std=0.0071
+
+=== Evaluating file: checkpoints/out_tf_ratbptt_ipc05_s1_ep200.h5 (ipc=5, stage=1) ===
+  seed=0 ...
+    -> acc=0.8017
+  seed=1 ...
+    -> acc=0.6964
+  seed=2 ...
+    -> acc=0.7826
+  [SUMMARY] mean=0.7603  std=0.0458
+
+=== Evaluating file: checkpoints/out_tf_ratbptt_ipc10_s2_w20t40_ep200.h5 (ipc=10, stage=2) ===
+  seed=0 ...
+    -> acc=0.7517
+  seed=1 ...
+    -> acc=0.7964
+  seed=2 ...
+    -> acc=0.7604
+  [SUMMARY] mean=0.7695  std=0.0194
+
+=== Evaluating file: checkpoints/out_tf_ratbptt_ipc20_s3_w20t40_ep300.h5 (ipc=20, stage=3) ===
+  seed=0 ...
+    -> acc=0.7887
+  seed=1 ...
+    -> acc=0.8030
+  seed=2 ...
+    -> acc=0.7712
+  [SUMMARY] mean=0.7876  std=0.0130
+
+=== Evaluating file: checkpoints/out_tf_ratbptt_ipc50_s4_w20t40_ep600.h5 (ipc=50, stage=4) ===
+  seed=0 ...
+    -> acc=0.4609
+  seed=1 ...
+    -> acc=0.5775
+  seed=2 ...
+    -> acc=0.6763
+  [SUMMARY] mean=0.5716  std=0.0880
+
+=== Summary over files ===
+file                                        IPC  stage     mean_acc      std_acc
+out_tf_ratbptt_ipc01_s0_ep200.h5              1      0      0.6829      0.0071
+out_tf_ratbptt_ipc05_s1_ep200.h5              5      1      0.7603      0.0458
+out_tf_ratbptt_ipc10_s2_w20t40_ep200.h5      10      2      0.7695      0.0194
+out_tf_ratbptt_ipc20_s3_w20t40_ep300.h5      20      3      0.7876      0.0130
+out_tf_fullbptt_ipc50_s4_boost_ep600.h5      50      4      0.5583      0.0706
+out_tf_ratbptt_ipc50_s4_w20t40_ep600.h5      50      4      0.5716      0.0880
+Submitted evaluation for extended-epoch Transformer runs.
