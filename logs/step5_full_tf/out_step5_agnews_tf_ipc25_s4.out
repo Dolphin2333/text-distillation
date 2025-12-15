@@ -1,0 +1,10 @@
+Torch Seed Specified with rank: 0
+Dataset: agnews_emb
+Dataset Path: ./scripts
+Namespace(seed=0, mp_distributed=False, world_size=1, rank=0, dist_url='tcp://224.66.41.62:23456', dist_backend='nccl', workers=0, gpu=None, root='./scripts', dataset='agnews_emb', arch='text_transformer', width=256, lr=0.001, inner_optim='Adam', outer_optim='Adam', inner_lr=0.001, label_lr_scale=1, num_per_class=25, batch_per_class=5, task_sampler_nc=4, window=20, minwindow=0, totwindow=20, num_train_eval=4, train_y=False, batch_size=2048, eps=1e-08, wd=0, test_freq=5, print_freq=20, start_epoch=0, epochs=100, ddtype='standard', cctype=0, zca=False, wandb=False, clip_coef=0.9, fname='out_step5_agnews_tf_ipc25_s4', name='agnews_step5_s4_tf', comp_aug=False, comp_aug_real=False, syn_strategy='none', real_strategy='none', ckptname='none', limit_train=False, load_ckpt=False, complete_random=False, boost_dd=True, boost_init_from='out_step5_agnews_tf_ipc20_s3.h5', boost_beta=0.3, stage=4, distributed=False, data_root='./scripts/agnews_emb')
+==> Preparing data..
+None None
+Dataset: number of classes: 4
+Training set size: 120000
+Image size: channel 1, height 768, width 1
+Boost-DD warm start from out_step5_agnews_tf_ipc20_s3.h5

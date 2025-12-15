@@ -1,0 +1,10 @@
+# Ignore all PDF files
+*.pdf
+paper.txt
+
+# Python artifacts
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+tim-code/
+analysis/

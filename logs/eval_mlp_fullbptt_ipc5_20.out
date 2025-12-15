@@ -1,0 +1,24 @@
+
+======== STEP 4: FINAL EVALUATION ========
+
+--- Evaluating checkpoints/agnews_mlp_fullbptt_ipc05_s0.h5 ---
+  seed=0: acc=0.8928
+  seed=1: acc=0.8992
+  seed=2: acc=0.8975
+  seed=3: acc=0.8955
+  seed=4: acc=0.9000
+  --> MEAN=0.8970  STD=0.0026
+
+--- Evaluating checkpoints/agnews_mlp_fullbptt_ipc20_s1.h5 ---
+  seed=0: acc=0.8789
+  seed=1: acc=0.8922
+  seed=2: acc=0.8859
+  seed=3: acc=0.8926
+  seed=4: acc=0.8864
+  --> MEAN=0.8872  STD=0.0050
+
+========== FINAL SUMMARY ==========
+checkpoints/agnews_mlp_fullbptt_ipc05_s0.h5   mean=0.8970   std=0.0026
+checkpoints/agnews_mlp_fullbptt_ipc20_s1.h5   mean=0.8872   std=0.0050
+===================================
+Evaluation jobs for Full-BPTT IPC 5/20 submitted.

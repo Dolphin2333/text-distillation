@@ -1,0 +1,24 @@
+
+======== STEP 4: FINAL EVALUATION ========
+
+--- Evaluating checkpoints/agnews_mlp_ratbptt_ipc05_s0.h5 ---
+  seed=0: acc=0.8921
+  seed=1: acc=0.8946
+  seed=2: acc=0.8930
+  seed=3: acc=0.8837
+  seed=4: acc=0.8972
+  --> MEAN=0.8921  STD=0.0046
+
+--- Evaluating checkpoints/agnews_mlp_ratbptt_ipc20_s1.h5 ---
+  seed=0: acc=0.8895
+  seed=1: acc=0.8992
+  seed=2: acc=0.8942
+  seed=3: acc=0.8991
+  seed=4: acc=0.8930
+  --> MEAN=0.8950  STD=0.0037
+
+========== FINAL SUMMARY ==========
+checkpoints/agnews_mlp_ratbptt_ipc05_s0.h5   mean=0.8921   std=0.0046
+checkpoints/agnews_mlp_ratbptt_ipc20_s1.h5   mean=0.8950   std=0.0037
+===================================
+Evaluation jobs for RaT-BPTT IPC 5/20 submitted.

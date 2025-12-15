@@ -1,0 +1,22 @@
+# Core PyTorch stack
+torch>=2.0
+torchvision>=0.15
+
+# Optimization helpers
+higher>=0.2
+torch-optimizer>=0.3
+
+# Data handling / utilities
+numpy>=1.23
+pandas>=1.5
+h5py>=3.8
+tqdm>=4.65
+scipy>=1.9
+Pillow>=9.5
+
+# NLP + HuggingFace toolchain
+transformers>=4.30
+datasets>=2.12
+
+# Experiment tracking / misc
+wandb>=0.15

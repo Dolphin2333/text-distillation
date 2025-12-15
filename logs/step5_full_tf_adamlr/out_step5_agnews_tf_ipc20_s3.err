@@ -1,0 +1,15 @@
+
+libgomp: Invalid value for environment variable OMP_NUM_THREADS
+Traceback (most recent call last):
+  File "/scratch/hz3916/Data_Distillation/text-distillation/main.py", line 122, in <module>
+    main_worker(args.gpu, ngpus_per_node, args)
+  File "/scratch/hz3916/Data_Distillation/text-distillation/framework/base.py", line 142, in main_worker
+    db = h5py.File(args.boost_init_from, 'r')
+  File "/scratch/hz3916/miniconda3/envs/textdd/lib/python3.10/site-packages/h5py/_hl/files.py", line 566, in __init__
+    fid = make_fid(name, mode, userblock_size, fapl, fcpl, swmr=swmr)
+  File "/scratch/hz3916/miniconda3/envs/textdd/lib/python3.10/site-packages/h5py/_hl/files.py", line 241, in make_fid
+    fid = h5f.open(name, flags, fapl=fapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 104, in h5py.h5f.open
+FileNotFoundError: [Errno 2] Unable to synchronously open file (unable to open file: name = 'out_step5_agnews_tf_ipc15_s2.h5', errno = 2, error message = 'No such file or directory', flags = 0, o_flags = 0)

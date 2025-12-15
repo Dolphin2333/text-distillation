@@ -1,0 +1,2 @@
+/opt/slurm/data/slurmd/job129950/slurm_script: line 47: syntax error near unexpected token `('
+/opt/slurm/data/slurmd/job129950/slurm_script: line 47: `echo \"Full-BPTT MLP runs submitted (IPC 1/10/50).\"'

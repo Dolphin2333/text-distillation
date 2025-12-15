@@ -1,0 +1,67 @@
+Using device: cuda
+Train: X=(120000, 768), y=(120000,); num_classes=4
+Val:   X=(7600, 768), y=(7600,)
+
+--- IPC = 1 ---
+  seed=0: acc=0.4101
+  seed=1: acc=0.3382
+  seed=2: acc=0.3355
+  seed=3: acc=0.3825
+  seed=4: acc=0.3537
+  -> MEAN=0.3640  STD=0.0285
+
+--- IPC = 5 ---
+  seed=0: acc=0.5033
+  seed=1: acc=0.5203
+  seed=2: acc=0.6126
+  seed=3: acc=0.5395
+  seed=4: acc=0.6139
+  -> MEAN=0.5579  STD=0.0466
+
+--- IPC = 10 ---
+  seed=0: acc=0.6559
+  seed=1: acc=0.6428
+  seed=2: acc=0.6970
+  seed=3: acc=0.6787
+  seed=4: acc=0.7074
+  -> MEAN=0.6763  STD=0.0242
+
+--- IPC = 15 ---
+  seed=0: acc=0.6855
+  seed=1: acc=0.6939
+  seed=2: acc=0.6950
+  seed=3: acc=0.7145
+  seed=4: acc=0.7554
+  -> MEAN=0.7089  STD=0.0251
+
+--- IPC = 20 ---
+  seed=0: acc=0.7045
+  seed=1: acc=0.7087
+  seed=2: acc=0.7305
+  seed=3: acc=0.7399
+  seed=4: acc=0.7693
+  -> MEAN=0.7306  STD=0.0235
+
+--- IPC = 25 ---
+  seed=0: acc=0.6961
+  seed=1: acc=0.7349
+  seed=2: acc=0.7584
+  seed=3: acc=0.7584
+  seed=4: acc=0.7789
+  -> MEAN=0.7453  STD=0.0283
+
+--- IPC = 30 ---
+  seed=0: acc=0.7541
+  seed=1: acc=0.7508
+  seed=2: acc=0.7566
+  seed=3: acc=0.7534
+  seed=4: acc=0.7874
+  -> MEAN=0.7604  STD=0.0136
+
+--- IPC = 50 ---
+  seed=0: acc=0.7841
+  seed=1: acc=0.7638
+  seed=2: acc=0.7925
+  seed=3: acc=0.7783
+  seed=4: acc=0.7970
+  -> MEAN=0.7831  STD=0.0116
