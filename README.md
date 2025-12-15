@@ -1,6 +1,6 @@
-# EMBARRASSINGLY SIMPLE DATASET DISTILLATION FOR NATURAL LANGUAGE PROCESSING
+# Embarrassingly Simple Dataset Distillation For Natural Language Processing 📊💡
 
-## Project Overview
+## 🔍 Project Overview
 This repository accompanies the NYU CDS project **“Embarrassingly Simple Dataset Distillation for Natural Language Processing”**. Building on the RaT‑BPTT and Boost‑DD strategies from the CV literature, we distill small sets of *continuous CLS embeddings* that allow lightweight student models (Text MLP or Transformer) to match or outperform randomly sampled real subsets on MRPC and AG News.
 
 Key ideas:
@@ -9,7 +9,7 @@ Key ideas:
 - Boost-DD warm-starts higher IPC stages with previously distilled checkpoints, yielding more stable solutions for large synthetic budgets.
 - All experiments run entirely in embedding space using frozen sentence encoders, which makes the approach “embarrassingly simple” to deploy for new NLP datasets.
 
-## Tutorial & Repository Structure
+## 📁 Tutorial & Repository Structure
 
 ```
 text-distillation/
@@ -23,7 +23,7 @@ text-distillation/
 └── analysis/                   # Generated plots, tables, and summaries
 ```
 
-### Core Code Components
+### 🧩 Core Code Components
 - **`main.py`** – Parses CLI flags and launches dataset distillation (supports RaT-BPTT, Full-BPTT, Boost-DD warm starts).
 - **`framework/`**
   - `base.py` – Bilevel training loop, evaluation routines, checkpointing.
