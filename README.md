@@ -19,8 +19,7 @@ text-distillation/
 ├── sbatch/                     # SLURM batch scripts for every experiment stage
 ├── eval_*.py                   # Evaluation utilities for distilled vs. random baselines
 ├── train_real_baseline.py      # Optional real-data baseline training script
-├── logs/                       # Saved stdout/stderr for every sbatch job
-└── analysis/                   # Generated plots, tables, and summaries
+└── logs/                       # Saved stdout/stderr for every sbatch job
 ```
 
 ### 🧩 Core Code Components
